@@ -1,0 +1,78 @@
+<div class="container-fluid container-tiles-pf containers-dashboard">
+
+  <div class="row row-tile-pf" >
+    <div class="col-xs-6 col-sm-6 col-md-2">
+      <div pf-aggregate-status-card status="dataCenters" show-top-border="true"></div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-2">
+      <div pf-aggregate-status-card status="clusters" show-top-border="true"></div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-2">
+      <div pf-aggregate-status-card status="hosts" show-top-border="true"></div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-2">
+      <div pf-aggregate-status-card status="storageDomains" show-top-border="true"></div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-2">
+      <div pf-aggregate-status-card status="vms" show-top-border="true"></div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-2">
+      <div pf-aggregate-status-card status="networks" show-top-border="true"></div>
+    </div>
+  </div>
+
+  <div class="row row-tile-pf">
+    <div class="col-md-12">
+      <div pf-card head-title="Global Utilization" hidetopborder="true">
+        <div class="row" ng-if="utilizationLoadingDone">
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div pf-utilization-chart
+                 config="cpuUsageConfig"
+                 donut-config="cpuUsageDonutConfig"
+                 sparkline-config="cpuUsageSparklineConfig"
+                 chart-data="cpuUsageData"
+                 sparkline-chart-height="sparklineChartHeight"></div>
+            <span class="trend-footer-pf">Last 30 Days</span>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div pf-utilization-chart
+                 config="memoryUsageConfig"
+                 donut-config="memoryUsageDonutConfig"
+                 sparkline-config="memoryUsageSparklineConfig"
+                 chart-data="memoryUsageData"
+                 sparkline-chart-height="sparklineChartHeight"></div>
+            <span class="trend-footer-pf">Last 30 Days</span>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div pf-utilization-chart
+                 config="networkUsageConfig"
+                 donut-config="networkUsageDonutConfig"
+                 sparkline-config="networkUsageSparklineConfig"
+                 chart-data="networkUsageData"
+                 sparkline-chart-height="sparklineChartHeight"></div>
+            <span class="trend-footer-pf">Last 30 Days</span>
+          </div>
+          <div class="col-xs-12 col-sm-6 col-md-3">
+            <div pf-utilization-chart
+                 config="storageUsageConfig"
+                 donut-config="storageUsageDonutConfig"
+                 sparkline-config="storageUsageSparklineConfig"
+                 chart-data="storageUsageData"
+                 sparkline-chart-height="sparklineChartHeight"></div>
+            <span class="trend-footer-pf">Last 30 Days</span>
+          </div>
+        </div>
+        <div ng-if="!utilizationLoadingDone" class="spinner spinner-lg loading"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row row-tile-pf row-tile-pf-last">
+    <div class="col-md-12">
+      <div rhev-heatmaps-card title="Node Utilization" hidetopborder="true"
+           heatmaps="heatmaps" heatmap-chart-height="dashboardHeatmapChartHeight" column-sizing-class="col-xs-6 col-sm-6 col-md-3"
+           heat-map-usage-legend-labels="nodeHeatMapUsageLegendLabels">
+      </div>
+    </div>
+  </div>
+</div>

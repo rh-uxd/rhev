@@ -1,0 +1,133 @@
+<!doctype html>
+<html ng-app="rhev.appModule">
+<head>
+    <meta charset="utf-8"/>
+
+    <title>RED HAT ENTERPRISE VIRTUALIXATION</title>
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="description" content=""/>
+    <meta name="viewport" content="width=device-width"/>
+
+    <link rel="shortcut icon" href="favicon.ico?v=1"/>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+     <!-- build:css styles/css/libraries.css -->
+    <link rel="stylesheet" href="libraries/rcue/dist/css/rcue.min.css"/>
+    <link rel="stylesheet" href="libraries/rcue/dist/css/rcue-additions.min.css"/>
+    <link rel="stylesheet" href="libraries/angular-patternfly/dist/styles/angular-patternfly.css">
+    <!-- endbuild -->
+
+    <!-- build:css styles/css/app.css -->
+    <link rel="stylesheet" href="styles/app.css"/>
+    <!-- endbuild -->
+
+</head>
+<body id="pf-app" class="pf-body ng-cloak>
+
+<div class="pf-framework">
+    <header class="pf-framework-header">
+        <nav class="navbar navbar-default navbar-pf navbar-fixed-top" role="navigation" ng-controller="rhev.appController as vm">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="styles/images/brand.svg" alt="RED HAT ENTERPRISE VIRTUALIZATION" />
+                </a>
+            </div>
+            <div class="collapse navbar-collapse navbar-collapse-1">
+                <ul class="nav navbar-nav navbar-utility">
+                    <li class="dropdown" dropdown>
+                        <a href dropdown-toggle>
+                            <span class="pficon pficon-info"></span> Messages: <strong>{{ vm.notifications.length }}</strong>
+                        </a>
+                        <div class="dropdown-menu infotip bottom-right">
+                            <div class="arrow"></div>
+                            <ul class="list-group">
+                                <li class="list-group-item" ng-repeat="notification in vm.notifications">
+                                    <span class="i pficon pficon-info"></span> {{ notification.text }}
+                                </li>
+                            </ul>
+                            <div class="footer">
+                                <a ng-click="vm.clearNotifications()" ng-if="vm.notifications.length > 0">Clear Messages</a>
+                                <span ng-if="vm.notifications.length === 0">No Messages</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="dropdown" dropdown>
+                        <a class="dropdown-toggle" dropdown-toggle>
+                            <span class="pficon pficon-user"></span>
+                            {{ vm.username }} <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li>
+                                <a>About Me</a>
+                            </li>
+                            <li>
+                                <a>Log Out</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+                <div rhev-navigation items="vm.navigationItems"></div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="pf-fixed-body rhev-body" id="centralPanel">
+        <div class="pf-framework-content">
+            <main ng-view class="pf-framework-view"></main>
+        </div>
+    </div>
+</div>
+
+<!-- build:js js/libraries.js -->
+<script src="libraries/jquery/dist/jquery.min.js"></script>
+<script src="libraries/patternfly/components/bootstrap-select/js/bootstrap-select.js"></script>
+<script src="libraries/angular/angular.js"></script>
+<script src="libraries/angular-route/angular-route.min.js"></script>
+<script src="libraries/angular-resource/angular-resource.min.js"></script>
+<script src="libraries/angular-sanitize/angular-sanitize.min.js"></script>
+<script src="libraries/patternfly/dist/js/patternfly.min.js"></script>
+<script src="libraries/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script src="libraries/patternfly/components/bootstrap/dist/js/bootstrap.min.js"></script>
+<script src="libraries/angular-translate/angular-translate.min.js"></script>
+<script src="libraries/angular-translate-loader-static-files/angular-translate-loader-static-files.min.js"></script>
+<script src="libraries/d3/d3.js"></script>
+<script src="libraries/c3/c3.js"></script>
+<script src="libraries/angular-patternfly/dist/angular-patternfly.js"></script>
+<script src="libraries/lodash/lodash.min.js"></script>
+<!-- endbuild -->
+
+<!-- build:js js/app.js -->
+
+<script src="modules/app/directives/navigation/navigation-directive.js"></script>
+<script src="modules/app/directives/card/card.module.js"></script>
+<script src="modules/app/directives/card/heatmaps/heatmaps-card-directive.js"></script>
+<script src="modules/app/directives/charts/charts.module.js"></script>
+<script src="modules/app/directives/charts/heatmap/heatmap-directive.js"></script>
+<script src="modules/app/directives/charts/heatmap/heatmap-legend-directive.js"></script>
+
+
+<script src="modules/sections/sections-module.js"></script>
+<script src="modules/sections/administration/administration-module.js"></script>
+
+<script src="modules/sections/dashboard/dashboard-module.js"></script>
+<script src="modules/sections/dashboard/dashboard-controller.js"></script>
+
+
+<script src="modules/sections/resources/resources-module.js"></script>
+
+<script src="modules/app/app-module.js"></script>
+<script src="modules/app/controllers/app-controller.js"></script>
+<script src="modules/app/mixins/chart-data-mixin.js"></script>
+<script src="modules/app/util/chart-config-util.js"></script>
+<!-- endbuild -->
+
+
+</body>
+</html>
