@@ -15,14 +15,14 @@
 atlassian-ide-plugin.xml
 
 ## Node ignore
-*/node_modules/
-*/src/libraries/
-*/bower_components/
+node_modules/
+src/libraries/
 
 ## Environmental ignore
 npm-debug.log
 describe.txt
 
 ##Framework Ignores
+src/styles/app.css
 appModuleTemplates.js
 dist

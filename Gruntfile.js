@@ -143,7 +143,7 @@ module.exports = function( grunt ) {
             test:    [
                 '<%= projectSettings.unitTest %>/**/*.js',
                 '<%= projectSettings.e2eTest %>/**/*.js'
-            ],
+            ]
         },
 
         // Empties folders to start fresh
@@ -342,7 +342,7 @@ module.exports = function( grunt ) {
                         suite:        'cb' // run all cb tests
                     }
                 }
-            },
+            }
             /**
              * For running specific test subsets, define your suites in protractor-e2e.conf.js, then reference them here
              */
@@ -366,6 +366,8 @@ module.exports = function( grunt ) {
     grunt.registerTask( 'serve', function( target ) {
         grunt.task.run( [
             'clean:server',
+            'less',
+            'copy',
             'configureProxies:server', // added just before connect
             'connect:livereload',
             'watch'
