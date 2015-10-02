@@ -6,10 +6,6 @@ angular.module('rhev.sections', ['rhev.administration', 'rhev.dashboard', 'rhev.
         templateUrl: 'modules/sections/dashboard/dashboard.html',
         controller: 'sections.dashboardController'
       })
-      .when('/resources', {
-        templateUrl: 'modules/sections/resources/resources.html',
-        controller: 'sections.resourcesController'
-      })
       .when('/administration', {
         templateUrl: 'modules/sections/administration/administration.html',
         controller: 'sections.administrationController'

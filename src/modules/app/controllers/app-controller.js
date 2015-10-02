@@ -13,7 +13,41 @@ angular.module( 'rhev.appModule').controller( 'rhev.appController', ['$scope', '
       },
       {
         "title":"Resources",
-        "href":"#/resources"
+        "href":"#/resources",
+        "children":[
+          {
+            "title":"Overview",
+            "href":"#/resources/overview"
+          },
+          {
+            "title":"Data Centers",
+            "href":"#/resources/data-centers"
+          },
+          {
+            "title":"Clusters",
+            "href":"#/resources/clusters"
+          },
+          {
+            "title":"Hosts",
+            "href":"#/resources/hosts"
+          },
+          {
+            "title":"Storage Domains",
+            "href":"#/resources/storage-domains"
+          },
+          {
+            "title":"Networks",
+            "href":"#/resources/networks"
+          },
+          {
+            "title":"Virtual Machines",
+            "href":"#/resources/virtual-machines"
+          },
+          {
+            "title":"Capacity Planning",
+            "href":"#/resources/capacity-planning"
+          }
+        ]
       },
       {
         "title":"Administration",

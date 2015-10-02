@@ -1,4 +1,4 @@
-angular.module('rhev.dashboard').controller('sections.dashboardController', ['$scope', 'ChartsDataMixin', '$translate', '$resource',
+angular.module('rhev.dashboard').controller('resources.storageDomainsController', ['$scope', 'ChartsDataMixin', '$translate', '$resource',
   function( $scope, chartsDataMixin, $translate, $resource ) {
     'use strict';
 
