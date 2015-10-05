@@ -1,7 +1,51 @@
-<div class="container-fluid container-tiles-pf containers-dashboard">
+<div class="container-fluid ">
   <div class="row row-tile-pf" >
-    <div class="col-xs-6 col-sm-6 col-md-2">
-      <div pf-card head-title="Clusters Placeholder" show-top-border="true"></div>
+    <div class="col-xs-12">
+      <div pf-card>
+        <div>
+          <div class="rhev-table-header">
+            <span class="rhev-table-title pull-left">Clusters</span>
+            <div class="card-pf-cell pull-right">
+              <span class="rhev-field-title">Last Updated:</span>
+              <span class="rhev-field-value">{{lastUpdateTime | date:'yyyy-MM-dd HH:mm a'}}</span>
+            </div>
+          </div>
+          <div class="rhev-table-contents container-fluid">
+            <div pf-data-toolbar class="row" config="toolbarConfig"></div>
+            <div pf-data-list class="resouces-cluster-list row" id="{{clustersListId}}" config="clustersListConfig" items="clusters" ng-if="clustersLoaded">
+              <div class="row">
+                <table>
+                  <tr>
+                    <td class="rhev-column name-column">
+                      <span class="rhev-label">{{item.name}}</span>
+                    </td>
+                    <td class="rhev-column rhev-object-column data-center-column">
+                      <span class="pficon fa fa-globe container-font-color rhev-icon-label"></span>
+                      <span class="rhev-label">{{item.dataCenter}}</span>
+                    </td>
+                    <td class="rhev-column compatibility-column">
+                      <span class="rhev-label rhev-title">Compatibility Version: </span>
+                      <span class="rhev-label">{{item.compatibilityVersion}}</span>
+                    </td>
+                    <td class="rhev-column cpu-type-column">
+                      <span class="rhev-label rhev-title">Cluster CPU Type: </span>
+                      <span class="rhev-label">{{item.cpuType}}</span>
+                    </td>
+                    <td class="rhev-column host-count-column">
+                      <span class="rhev-label rhev-title">Host Count: </span>
+                      <span class="rhev-label rhev-count">{{item.hostCount}}</span>
+                    </td>
+                    <TD class="rhev-column description-column">
+                      <span class="rhev-label rhev-title">Description: </span>
+                      <div class="rhev-label description">{{item.description}}</div>
+                    </TD>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

@@ -1,0 +1,49 @@
+{
+   "clusters": [
+       {
+          "uuid": "100001",
+          "name": "cluster 1",
+          "dataCenter": "data center 1",
+          "compatibilityVersion": "3.5",
+          "description": "The quick brown fox jumps over the lazy dog. Sir!",
+          "cpuType": "intel",
+          "hostCount": 13
+       },
+       {
+          "uuid": "100002",
+          "name": "cluster 2",
+          "dataCenter": "data center 1",
+          "compatibilityVersion": "3.5",
+          "description": "This is a very long multi-line description. It is designed to show how very long descriptions would look in the data list. They should wrap and still be readable.",
+          "cpuType": "intel",
+          "hostCount": 10
+       },
+       {
+          "uuid": "100003",
+          "name": "cluster 3",
+          "dataCenter": "data center 1",
+          "compatibilityVersion": "3.5",
+          "description": "",
+          "cpuType": "intel",
+          "hostCount": 5
+       },
+       {
+          "uuid": "100004",
+          "name": "cluster 4",
+          "dataCenter": "data center 2",
+          "compatibilityVersion": "3.5",
+          "description": "",
+          "cpuType": "intel",
+          "hostCount": 13
+       },
+       {
+          "uuid": "100005",
+          "name": "cluster 5",
+          "dataCenter": "data center 2",
+          "compatibilityVersion": "3.5",
+          "description": "",
+          "cpuType": "intel",
+          "hostCount": 8
+       }
+   ]
+}

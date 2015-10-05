@@ -1,190 +1,149 @@
-angular.module('rhev.dashboard').controller('resources.clustersController', ['$scope', 'ChartsDataMixin', '$translate', '$resource',
+'use strict';
+
+angular.module('rhev.resources.clusters').controller('resources.clustersController', ['$scope', 'ChartsDataMixin', '$translate', '$resource',
   function( $scope, chartsDataMixin, $translate, $resource ) {
-    'use strict';
 
-    $scope.sparklineChartHeight = chartsDataMixin.dashboardSparklineChartHeight;
-    $scope.dashboardHeatmapChartHeight = chartsDataMixin.dashboardHeatmapChartHeight;
+    $scope.clustersListId = 'resources-clusters-list';
 
-    $scope.dataCenters = {
-      title: "Data Centers",
-      iconClass: "fa fa-globe",
-      count: 2,
-      notifications:[
-        {
-          iconClass: "pficon pficon-error-circle-o",
-          count: 1
-        }
-      ]
+    var matchesFilter = function (cluster, filter) {
+      var match = true;
+
+      if (filter.id === 'name') {
+        match = cluster.name.match(filter.value) !== null;
+      }
+      return match;
     };
 
-    $scope.clusters = {
-      title:"Clusters",
-      iconClass:"fa fa-cubes",
-      count:10,
-      notifications:[
-        {
-          iconClass:"pficon pficon-error-circle-o",
-          count:"1"
+    var matchesFilters = function (cluster, filters) {
+      var matches = true;
+
+      filters.forEach(function(filter) {
+        if (!matchesFilter(cluster, filter)) {
+          matches = false;
+          return false;
         }
-      ]
+      });
+      return matches;
     };
 
-    $scope.hosts = {
-      title:"Hosts",
-      iconClass:"fa fa-desktop",
-      count:75,
-      notifications:[
+    $scope.applyFilters = function () {
+      if ($scope.toolbarConfig.filterConfig.appliedFilters && $scope.toolbarConfig.filterConfig.appliedFilters.length > 0) {
+        $scope.clusters = [];
+        $scope.allClusters.forEach(function (cluster) {
+          if (matchesFilters(cluster, $scope.toolbarConfig.filterConfig.appliedFilters)) {
+            $scope.clusters.push(cluster);
+          }
+        });
+      } else {
+        $scope.clusters = $scope.allClusters;
+      }
+      $scope.toolbarConfig.filterConfig.resultsCount = $scope.clusters.length;
+    };
+
+    var filterChange = function (filters) {
+      $rootScope.resourcesClustersFilters = filters;
+      $scope.applyFilters();
+    };
+
+    var filterConfig = {
+      fields: [
         {
-          iconClass:"pficon pficon-error-circle-o",
-          count:"1"
+          id: 'name',
+          title:  'Name',
+          placeholder: 'Filter by Name',
+          filterType: 'text'
+        }
+      ],
+      resultsCount: 0,
+      appliedFilters: [],
+      onFilterChange: filterChange
+    };
+
+    var createCluster = function (action) {
+    };
+
+    var editCluster = function (action) {
+    };
+
+    var fakeClusterAction = function (action) {
+    };
+
+    var actionsConfig = {
+      primaryActions: [
+        {
+          name: 'Create Cluster',
+          title: 'Create a cluster',
+          actionFn: createCluster
         },
         {
-          iconClass:"pficon pficon-warning-triangle-o",
-          count:"15"
+          name: 'Edit Cluster',
+          title: 'Edit the selected cluster',
+          actionFn: editCluster
         }
-      ]
-    };
-
-    $scope.storageDomains = {
-      title:"Storage Domains",
-      "type":"projects",
-      iconClass:"fa fa-database",
-      count:510,
-      notifications:[
+      ],
+      moreActions: [
         {
-          iconClass:"pficon pficon-error-circle-o",
-          count:"1"
-        }
-      ]
-    };
-
-    $scope.vms =  {
-      title:"VMs",
-      iconClass:"fa fa-laptop",
-      count:1200,
-      notifications:[
+          name: 'Fake Cluster Action',
+          title: 'Perform another action',
+          actionFn: fakeClusterAction
+        },
         {
-          iconClass:"pficon pficon-error-circle-o",
-          count:3
-        }
-      ]
-    };
-
-    $scope.networks = {
-      title:"Networks",
-      iconClass:"pficon-service",
-      count:2500,
-      notifications:[
+          name: 'Another Action',
+          title: 'Do something else',
+          actionFn: fakeClusterAction
+        },
         {
-          iconClass:"pficon pficon-error-circle-o",
-          count:"1"
+          name: 'Disabled Action',
+          title: 'Unavailable action',
+          actionFn: fakeClusterAction,
+          isDisabled: true
+        },
+        {
+          name: 'Something Else',
+          title: '',
+          actionFn: fakeClusterAction
+        },
+        {
+          isSeparator: true
+        },
+        {
+          name: 'Grouped Action 1',
+          title: 'Do something',
+          actionFn: fakeClusterAction
+        },
+        {
+          name: 'Grouped Action 2',
+          title: 'Do something similar',
+          actionFn: fakeClusterAction
         }
       ]
     };
 
-
-
-    // Utilization
-    $scope.cpuUsageConfig = chartConfig.cpuUsageConfig;
-    $scope.cpuUsageSparklineConfig = {
-      chartId: 'cpuSparklineChart'
-    };
-    $scope.cpuUsageDonutConfig = {
-      chartId: 'cpuDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+    $scope.toolbarConfig = {
+      filterConfig: filterConfig,
+      actionsConfig: actionsConfig
     };
 
-    $scope.memoryUsageConfig = chartConfig.memoryUsageConfig;
-    $scope.memoryUsageSparklineConfig = {
-      chartId: 'memorySparklineChart'
-    };
-    $scope.memoryUsageDonutConfig = {
-      chartId: 'memoryDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+    var handleClusterClick = function(item) {
+      // Update details view
     };
 
-    $scope.networkUsageConfig = chartConfig.networkUsageConfig;
-    $scope.networkUsageSparklineConfig = {
-      chartId: 'networkSparklineChart'
-    };
-    $scope.networkUsageDonutConfig = {
-      chartId: 'networkDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+    $scope.listConfig = {
+      selectionMatchProp: 'uuid',
+      selectedItems: [],
+      checkDisabled: false,
+      onClick: handleClusterClick
     };
 
-    $scope.storageUsageConfig = chartConfig.storageUsageConfig;
-    $scope.storageUsageSparklineConfig = {
-      chartId: 'storageSparklineChart'
-    };
-    $scope.storageUsageDonutConfig = {
-      chartId: 'storageDonutChart',
-      thresholds: {'warning':'60','error':'90'}
-    };
-
-    $scope.utilizationLoadingDone = false;
-    var ContainersUtilization = $resource('/dashboard/utilization');
-    ContainersUtilization.get(function(response) {
-      $scope.cpuUsageData = chartsDataMixin.getCpuUsageDataFromResponse(response, $scope.cpuUsageConfig.usageDataName);
-      $scope.memoryUsageData = chartsDataMixin.getMemoryUsageDataFromResponse(response, $scope.memoryUsageConfig.usageDataName);
-      $scope.networkUsageData = chartsDataMixin.getNetworkUsageDataFromResponse(response, $scope.networkUsageConfig.usageDataName);
-      $scope.storageUsageData = chartsDataMixin.getStorageUsageDataFromResponse(response, $scope.storageUsageConfig.usageDataName);
-      $scope.utilizationLoadingDone = true;
+    $scope.clustersLoaded = false;
+    var clustersResource = $resource('/resources/clusters/all');
+    clustersResource.get(function(response) {
+      $scope.allClusters = response.clusters;
+      $scope.applyFilters();
+      $scope.clustersLoaded = true;
+      $scope.lastUpdateTime = new Date();
+      console.dir($scope.allClusters);
     });
 
-    // HeatMaps
-
-    $scope.nodeCpuUsage = {
-      title: 'CPU',
-      id: 'nodeCpuUsageMap',
-      loadingDone: false
-    };
-    $scope.nodeMemoryUsage = {
-      title: 'Memory',
-      id: 'nodeMemoryUsageMap',
-      loadingDone: false
-    };
-
-    $scope.nodeNetworkUsage = {
-      title: 'Network',
-      id: 'nodeNetworkUsageMap',
-      loadingDone: false
-    };
-    $scope.nodeStorageUsage = {
-      title: 'Storage',
-      id: 'nodeStorageUsageMap',
-      loadingDone: false
-    };
-
-    $scope.heatmaps = [$scope.nodeCpuUsage, $scope.nodeMemoryUsage, $scope.nodeNetworkUsage, $scope.nodeStorageUsage];
-
-    var NodeCpuUsage = $resource('/dashboard/node-cpu-usage');
-    NodeCpuUsage.get(function(response) {
-      var data = response.data;
-      $scope.nodeCpuUsage.data = data.nodeCpuUsage;
-      $scope.nodeCpuUsage.loadingDone = true;
-    });
-
-    var NodeMemoryUsage = $resource('/dashboard/node-memory-usage');
-    NodeMemoryUsage.get(function(response) {
-      var data = response.data;
-      $scope.nodeMemoryUsage.data = data.nodeMemoryUsage;
-      $scope.nodeMemoryUsage.loadingDone = true;
-    });
-
-    var NodeNetworkUsage = $resource('/dashboard/node-network-usage');
-    NodeNetworkUsage.get(function(response) {
-      var data = response.data;
-      $scope.nodeNetworkUsage.data = data.nodeNetworkUsage;
-      $scope.nodeNetworkUsage.loadingDone = true;
-    });
-
-    var NodeStorageUsage = $resource('/dashboard/node-storage-usage');
-    NodeStorageUsage.get(function(response) {
-      var data = response.data;
-      $scope.nodeStorageUsage.data = data.nodeStorageUsage;
-      $scope.nodeStorageUsage.loadingDone = true;
-    });
-
-    $scope.nodeHeatMapUsageLegendLabels = chartsDataMixin.nodeHeatMapUsageLegendLabels;
   }
 ]);

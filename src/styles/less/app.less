@@ -1,9 +1,26 @@
+/* Patternfly Overrides */
+.card-pf-status .card-pf-title .pficon {
+  color: #1186C1 !important;
+}
+
+.data-list-pf .list-group-item.active .pficon, .data-list-pf .list-group-item.active:hover .pficon, .data-list-pf .list-group-item.active:focus .pficon {
+  color: #1186C1;
+}
+.data-list-pf .list-group-item .pficon {
+  font-size: 18px;
+}
+.tiles-view-pf .tile.active .pficon, .tiles-view-pf .tile.active:hover .pficon, .tiles-view-pf .tile.active:focus .pficon {
+  color: #1186C1;
+}
+
+/* Rhev Specifics */
+
 .rhev-body {
   background: #f5f5f5;
 }
 
 .pf-fixed-body {
-  padding-top: 135px;
+  padding-top: 140px;
 }
 
 .breadcrumb {
@@ -57,3 +74,110 @@
   float: left;
 }
 
+.rhev-table-header {
+  display: inline-block;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.rhev-table-contents {
+  border: 1px solid #d1d1d1;
+}
+
+.rhev-table-title {
+  font-size: 16px;
+  font-weight: 400;
+}
+
+.rhev-field-title {
+  float: left;
+  font-size: 13px;
+  font-weight: 700;
+  margin-right: 5px;
+}
+.rhev-field-value {
+  float: left;
+  text-align: right;
+  white-space: nowrap;
+}
+
+.data-list-pf {
+  .rhev-column {
+    float: left;
+    padding: 2px 5px;
+  }
+  .rhev-column:first-of-type {
+    padding-left: 25px;
+  }
+
+  .rhev-object-column {
+    padding-top: 1px !important;
+  }
+
+  .rhev-label {
+    color: #515151;
+    font-size: 12px;
+    vertical-align: middle;
+    white-space: nowrap;
+    padding-left: 5px;
+  }
+
+  .rhev-label.rhev-title {
+    float: left;
+    color: #515151;
+    font-size: 13px;
+    font-weight: 700;
+    padding-top: 2px;
+  }
+  .rhev-icon-label.rhev-title {
+    float: left;
+    color: #515151;
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .rhev-label.rhev-count {
+    float: left;
+    text-align: right;
+    line-height: 24px;
+    text-align: right;
+    width: 32px;
+  }
+
+  .rhev-icon-label {
+    color: #515151;
+    font-size: 18px;
+    vertical-align: middle;
+    white-space: nowrap;
+    padding-left: 5px;
+  }
+  .pficon.rhev-icon-label {
+    color: #1186C1;
+  }
+}
+
+.resouces-cluster-list {
+  .name-column {
+    width: 110px;
+  }
+  .data-center-column {
+    width: 170px;
+  }
+  .cpu-type-column {
+    width: 170px;
+  }
+  .host-count-column {
+    width: 150px;
+  }
+  .description-column {
+    padding-left: 25px;
+    .description {
+      word-wrap: break-word;
+      white-space:normal;
+      width: 300px;
+      float:left;
+      padding-top: 2px;
+    }
+  }
+}
