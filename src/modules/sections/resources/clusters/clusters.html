@@ -142,17 +142,6 @@
                           </div>
                         </div>
                       </div>
-                      <div class="event-type-container" ng-if="selectedCluster.eventsInfo.taskEvents && selectedCluster.eventsInfo.taskEvents.length > 0">
-                        <div class="event-type-header">
-                          <span class="pficon fa fa-tasks"></span>
-                          <span>{{selectedCluster.eventsInfo.taskEvents.length}} Running Tasks</span>
-                        </div>
-                        <div class="event-messages">
-                          <div ng-repeat="event in selectedCluster.eventsInfo.taskEvents">
-                            <span class="message-text">{{event.message}}<span> {{event.date}}</span></span>
-                          </div>
-                        </div>
-                      </div>
                     </div>
                     <div>
                       <a class="pull-right">View All Events</a>

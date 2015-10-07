@@ -8,11 +8,11 @@
     "cpuType": "intel",
     "hostsInfo": {
       "title": "Hosts",
-      "count": 13,
+      "count": 8,
       "notifications" : [
         {
           "iconClass": "pficon pficon-error-circle-o",
-          "count": 3
+          "count": 1
         },
         {
           "iconClass": "fa fa-wrench",
@@ -102,47 +102,7 @@
         "memoryUsed":15,
         "memoryTotal": 16,
         "cpuUsedPercent":25
-      },
-      {
-        "id":"Host 9",
-        "status": "error",
-        "statusMessage":"Host is unreachable",
-        "memoryUsed":4,
-        "memoryTotal": 8,
-        "cpuUsedPercent":98
-      },
-      {
-        "id":"Host 10",
-        "status": "ok",
-        "statusMessage":"Host is up and running correctly",
-        "memoryUsed":3,
-        "memoryTotal": 8,
-        "cpuUsedPercent":74
-       },
-       {
-         "id":"Host 11",
-         "status": "ok",
-         "statusMessage":"Host is up and running correctly",
-         "memoryUsed":13,
-         "memoryTotal": 16,
-         "cpuUsedPercent": 72
-       },
-       {
-         "id":"Host 12",
-         "status": "ok",
-         "statusMessage":"Host is up and running correctly",
-         "memoryUsed":15,
-         "memoryTotal": 16,
-         "cpuUsedPercent":25
-       },
-       {
-         "id":"Host 13",
-         "status": "error",
-         "statusMessage":"Host is unreachable",
-         "memoryUsed":4,
-         "memoryTotal": 8,
-         "cpuUsedPercent":98
-     }
+      }
     ],
     "vmData" : [
       {
