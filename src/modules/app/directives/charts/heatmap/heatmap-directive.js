@@ -5,7 +5,9 @@ angular.module('rhev.charts').directive('rhevHeatMap', ['$timeout',
       restrict: 'A',
       scope: {
         parentid: '@',
-        data: '='
+        data: '=',
+        colorPattern: '=?',
+        thresholdRange: '=?'
       },
       replace: true,
       template: '<svg style="width:100%; height: 100%;"></svg>',
@@ -13,18 +15,15 @@ angular.module('rhev.charts').directive('rhevHeatMap', ['$timeout',
         function($scope, $rootScope) {
 
           var defaultHeatmapBlockPadding = 1;
-
-          var getDefaultHeatmapColorPattern = function() {
-            return ['#d4f0fa', '#F9D67A', '#EC7A08', '#CE0000'];
-          };
+          var thresholdRange = $scope.thresholdRange || [0.7, 0.8, 0.9];
+          $scope.heatmapColorPattern = $scope.colorPattern || ['#d4f0fa', '#F9D67A', '#EC7A08', '#CE0000'];
 
           var getDefaultHeatmapColor = function() {
-            return d3.scale.threshold().domain([0.7, 0.8, 0.9]).range(getDefaultHeatmapColorPattern());
+            return d3.scale.threshold().domain(thresholdRange).range($scope.heatmapColorPattern);
           };
 
           $scope.blockPadding = defaultHeatmapBlockPadding;
           $scope.heatmapColor = getDefaultHeatmapColor();
-          $scope.heatmapColorPattern = getDefaultHeatmapColorPattern();
 
           $scope.determineBlockSize = function() {
             var x = $scope.width;

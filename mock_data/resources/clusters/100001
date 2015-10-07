@@ -1,0 +1,318 @@
+{
+  "data" : {
+    "uuid": "100001",
+    "name": "cluster 1",
+    "dataCenter": "data center 1",
+    "compatibilityVersion": "3.5",
+    "description": "",
+    "cpuType": "intel",
+    "hostsInfo": {
+      "title": "Hosts",
+      "total": 10,
+      "notifications" : [
+        {
+          "iconClass": "pficon pficon-error-circle-o",
+          "count": 3
+        },
+        {
+          "iconClass": "fa fa-wrench",
+          "count": 2
+        }
+      ]
+    },
+    "vmInfo": {
+      "title": "Virtual Machines",
+      "total": "40",
+      "notifications" : [
+        {
+          "iconClass": "fa fa-pause",
+          "count": 1
+        },
+        {
+          "iconClass": "fa fa-chevron-down",
+          "count": 2
+        },
+        {
+          "iconClass": "fa fa-question",
+          "count": 1
+        }
+      ]
+    },
+    "hostData" : [
+      {
+        "id":"Host 1",
+        "status": "error",
+        "statusMessage":"Host is unreachable",
+        "memoryUsed":3.4,
+        "memoryTotal": 8,
+        "cpuUsedPercent":0
+      },
+      {
+        "id":"Host 2",
+        "status": "maintenance",
+        "statusMessage":"System memory is running low",
+        "memoryUsed":15,
+        "memoryTotal": 16,
+        "cpuUsedPercent":15
+      },
+      {
+        "id":"Host 3",
+        "status": "ok",
+        "statusMessage":"Host is up and running correctly",
+        "memoryUsed":4,
+        "memoryTotal": 8,
+        "cpuUsedPercent":65
+      },
+      {
+        "id":"Host 4",
+        "status": "ok",
+        "statusMessage":"Host is up and running correctly",
+        "memoryUsed":3,
+        "memoryTotal": 8,
+        "cpuUsedPercent":82
+      },
+      {
+        "id":"Host 5",
+        "status": "error",
+        "statusMessage":"Host is unreachable",
+        "memoryUsed":8,
+        "memoryTotal": 8,
+        "cpuUsedPercent":45
+      },
+      {
+        "id":"Host 6",
+        "status": "maintenance",
+        "statusMessage":"Host ping timeout is close to the threshold level",
+        "memoryUsed": 7,
+        "memoryTotal": 8,
+        "cpuUsedPercent":86
+      },
+      {
+        "id":"Host 7",
+        "status": "ok",
+        "statusMessage":"Host is up and running correctly",
+        "memoryUsed":13,
+        "memoryTotal": 16,
+        "cpuUsedPercent": 72
+      },
+      {
+        "id":"Host 8",
+        "status": "ok",
+        "statusMessage":"Host is up and running correctly",
+        "memoryUsed":15,
+        "memoryTotal": 16,
+        "cpuUsedPercent":25
+      },
+      {
+        "id":"Host 9",
+        "status": "error",
+        "statusMessage":"Host is unreachable",
+        "memoryUsed":4,
+        "memoryTotal": 8,
+        "cpuUsedPercent":98
+      },
+      {
+        "id":"Host 10",
+        "status": "ok",
+        "statusMessage":"Host is up and running correctly",
+        "memoryUsed":3,
+        "memoryTotal": 8,
+        "cpuUsedPercent":74
+      }
+    ],
+    "vmData" : [
+      {
+        "id":"VM 1",
+        "status": "running"
+      },
+      {
+        "id":"VM 2",
+        "status": "running"
+      },
+      {
+        "id":"VM 3",
+        "status": "running"
+      },
+      {
+        "id":"VM 4",
+        "status": "running"
+      },
+      {
+        "id":"VM 5",
+        "status": "down"
+      },
+      {
+        "id":"VM 6",
+        "status": "running"
+      },
+      {
+        "id":"VM 7",
+        "status": "running"
+      },
+      {
+        "id":"VM 8",
+        "status": "running"
+      },
+      {
+        "id":"VM 9",
+        "status": "running"
+      },
+      {
+        "id":"VM 10",
+        "status": "running"
+      },
+      {
+        "id":"VM 11",
+        "status": "running"
+      },
+      {
+        "id":"VM 12",
+        "status": "running"
+      },
+      {
+        "id":"VM 13",
+        "status": "running"
+      },
+      {
+        "id":"VM 14",
+        "status": "paused"
+      },
+      {
+        "id":"VM 15",
+        "status": "running"
+      },
+      {
+        "id":"VM 16",
+        "status": "running"
+      },
+      {
+        "id":"VM 17",
+        "status": "running"
+      },
+      {
+        "id":"VM 18",
+        "status": "running"
+      },
+      {
+        "id":"VM 19",
+        "status": "unknown"
+      },
+      {
+        "id":"VM 20",
+        "status": "running"
+      },
+      {
+        "id":"VM 21",
+        "status": "running"
+      },
+      {
+        "id":"VM 22",
+        "status": "running"
+      },
+      {
+        "id":"VM 23",
+        "status": "running"
+      },
+      {
+        "id":"VM 24",
+        "status": "running"
+      },
+      {
+        "id":"VM 25",
+        "status": "running"
+      },
+      {
+        "id":"VM 26",
+        "status": "running"
+      },
+      {
+        "id":"VM 27",
+        "status": "running"
+      },
+      {
+        "id":"VM 28",
+        "status": "down"
+      },
+      {
+        "id":"VM 29",
+        "status": "running"
+      },
+      {
+        "id":"VM 30",
+        "status": "running"
+      },
+      {
+        "id":"VM 31",
+        "status": "running"
+      },
+      {
+        "id":"VM 32",
+        "status": "running"
+      },
+      {
+        "id":"VM 33",
+        "status": "running"
+      },
+      {
+        "id":"VM 34",
+        "status": "running"
+      },
+      {
+        "id":"VM 35",
+        "status": "running"
+      },
+      {
+        "id":"VM 36",
+        "status": "running"
+      },
+      {
+        "id":"VM 37",
+        "status": "running"
+      },
+      {
+        "id":"VM 38",
+        "status": "running"
+      },
+      {
+        "id":"VM 39",
+        "status": "running"
+      },
+      {
+        "id":"VM 40",
+        "status": "running"
+      }
+    ],
+    "events" : [
+      {
+        "severity" : "critical",
+        "date": "2 min ago",
+        "message": "First critical message could go here."
+      },
+      {
+        "severity" : "warning",
+        "date": "2 min ago",
+        "message": "First warning message could go here. If it is a long message it can wrap."
+      },
+      {
+        "severity" : "warning",
+        "date": "5 min ago",
+        "message": "Second warning message could go here."
+      },
+      {
+        "severity" : "task",
+        "date": "2 min ago",
+        "message": "First task message could go here. If it is a long message it can wrap."
+      },
+      {
+        "severity" : "task",
+        "date": "5 min ago",
+        "message": "Second task message could go here. If it is a long message it can wrap."
+      },
+      {
+        "severity" : "task",
+        "date": "5 min ago",
+        "message": "Third task message could go here. If it is a long message it can wrap."
+      }
+    ]
+  }
+}

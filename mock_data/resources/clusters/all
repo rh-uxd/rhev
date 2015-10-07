@@ -5,7 +5,7 @@
           "name": "cluster 1",
           "dataCenter": "data center 1",
           "compatibilityVersion": "3.5",
-          "description": "The quick brown fox jumps over the lazy dog. Sir!",
+          "description": "",
           "cpuType": "intel",
           "hostCount": 13
        },
@@ -14,7 +14,7 @@
           "name": "cluster 2",
           "dataCenter": "data center 1",
           "compatibilityVersion": "3.5",
-          "description": "This is a very long multi-line description. It is designed to show how very long descriptions would look in the data list. They should wrap and still be readable.",
+          "description": "",
           "cpuType": "intel",
           "hostCount": 10
        },

@@ -1,4 +1,8 @@
 <div class="container-fluid ">
+  <ol class="breadcrumb" style="margin-bottom: 0px;">
+    <li class="active"><a href="#/resources">Resources</a></li>
+    <li>Clusters</li>
+  </ol>
   <div class="row row-tile-pf" >
     <div class="col-xs-12">
       <div pf-card>
@@ -12,7 +16,7 @@
           </div>
           <div class="rhev-table-contents container-fluid">
             <div pf-data-toolbar class="row" config="toolbarConfig"></div>
-            <div pf-data-list class="resouces-cluster-list row" id="{{clustersListId}}" config="clustersListConfig" items="clusters" ng-if="clustersLoaded">
+            <div pf-data-list class="resources-cluster-list row" id="{{clustersListId}}" config="clustersListConfig" items="clusters" ng-if="clustersLoaded">
               <div class="row">
                 <table>
                   <tr>
@@ -23,24 +27,138 @@
                       <span class="pficon fa fa-globe container-font-color rhev-icon-label"></span>
                       <span class="rhev-label">{{item.dataCenter}}</span>
                     </td>
-                    <td class="rhev-column compatibility-column">
+                    <td class="rhev-field-column compatibility-column">
                       <span class="rhev-label rhev-title">Compatibility Version: </span>
                       <span class="rhev-label">{{item.compatibilityVersion}}</span>
                     </td>
-                    <td class="rhev-column cpu-type-column">
+                    <td class="rhev-field-column cpu-type-column">
                       <span class="rhev-label rhev-title">Cluster CPU Type: </span>
                       <span class="rhev-label">{{item.cpuType}}</span>
                     </td>
-                    <td class="rhev-column host-count-column">
+                    <td class="rhev-field-column host-count-column">
                       <span class="rhev-label rhev-title">Host Count: </span>
                       <span class="rhev-label rhev-count">{{item.hostCount}}</span>
                     </td>
-                    <TD class="rhev-column description-column">
+                    <TD class="rhev-field-column description-column">
                       <span class="rhev-label rhev-title">Description: </span>
-                      <div class="rhev-label description">{{item.description}}</div>
+                      <label class="rhev-label description">{{item.description}}</label>
                     </TD>
                   </tr>
                 </table>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rhev-cluster-details container-fluid">
+          <div class="rhev-table-header row">
+            <span class="rhev-table-title pull-left">{{selectedCluster.name}}</span>
+          </div>
+          <div>
+            <ul class="nav nav-tabs nav-tabs-pf" ng-if="selectedCluster">
+              <li ng-class="{active: currentSection == 'dashboard' || !currentSection}" ng-click="setCurrentSection('dashboard')">  <a>Dashboard</a></li>
+              <li ng-class="{active: currentSection == 'summary'}"                      ng-click="setCurrentSection('summary')">    <a>Summary</a></li>
+              <li ng-class="{active: currentSection == 'networks'}"                     ng-click="setCurrentSection('networks')">   <a>Logical Networks</a></li>
+              <li ng-class="{active: currentSection == 'hosts'}"                        ng-click="setCurrentSection('hosts')">      <a>Hosts</a></li>
+              <li ng-class="{active: currentSection == 'vms'}"                          ng-click="setCurrentSection('vms')">        <a>Virtual Machines</a></li>
+              <li ng-class="{active: currentSection == 'groups'}"                       ng-click="setCurrentSection('groups')">     <a>Affinity Groups</a></li>
+              <li ng-class="{active: currentSection == 'permissions'}"                  ng-click="setCurrentSection('permissions')"><a>Permissions</a></li>
+            </ul>
+          </div>
+          <div class="container-fluid container-tiles-pf details-content rhev-body">
+            <div class="row row-tile-pf" ng-if="selectedCluster && (currentSection == 'dashboard' || !currentSection)">
+              <div class="col-xs-12 col-md-3">
+                <div pf-card class="host-status" head-title="Host Status">
+                  <div style="height:241px;">
+                    <div pf-aggregate-status-card class="cluster-total-hosts" status="selectedCluster.hostsInfo"></div>
+
+                    <div ng-if="true">
+                      <div class="status-bar">
+                        <div class="host-status-error" style="width:{{selectedCluster.hostStatusInfo.percentError}}%" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{selectedCluster.hostStatusInfo.errorTooltip}}"></div>
+                        <div class="host-status-maintenance" style="width:{{selectedCluster.hostStatusInfo.percentMaintenance + selectedCluster.hostStatusInfo.percentError}}%" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{selectedCluster.hostStatusInfo.maintenanceTooltip}}"></div>
+                        <div class="host-status-running" style="width:100%" data-toggle="tooltip" data-placement="top" title="" data-original-title="{{selectedCluster.hostStatusInfo.runningTooltip}}"></div>
+                      </div>
+                      <div rhev-heat-map-legend legend="hostStatusLegend" legend-colors="hostStatusColorPattern"></div>
+                    </div>
+                    <div ng-if="false">
+                      <span class="h3 heatmap-chart-title">Host Status</span>
+                      <div id="hostStatusHeatmap" class="heatmap-container" style="height:{{hostsHeatmapChartHeight}};">
+                        <div rhev-heat-map data="selectedCluster.hostStatusData" threshold-range="hostStatusThresholdRange" color-pattern="hostStatusColorPattern" parentid="hostStatusHeatmap"></div>
+                      </div>
+                      <div rhev-heat-map-legend legend="hostStatusLegend" legend-colors="hostStatusColorPattern"></div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-3">
+                <div pf-card class="host-utilization" head-title="Host Utilization">
+                  <div class="{{columnSizingClass}} container-heatmap-tile">
+                    <span class="h3 heatmap-chart-title">Host Memory Utilization</span>
+                    <div id="hostMemoryUtilization" class="heatmap-container" style="height: {{hostsHeatmapChartHeight}};">
+                      <div rhev-heat-map data="selectedCluster.hostMemoryData" parentid="hostMemoryUtilization"></div>
+                    </div>
+                  </div>
+                  <div class="{{columnSizingClass}} container-heatmap-tile">
+                    <span class="h3 heatmap-chart-title">Host CPU Utilization</span>
+                    <div id="hostCPUUtilization" class="heatmap-container" style="height: {{hostsHeatmapChartHeight}};">
+                      <div rhev-heat-map data="selectedCluster.hostCPUData" parentid="hostCPUUtilization"></div>
+                    </div>
+                  </div>
+                  <div rhev-heat-map-legend legend="utilizationLegend"></div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-3">
+                <div pf-card class="host-status" head-title="Virtual Machine Status">
+                  <div pf-aggregate-status-card class="cluster-total-vms" status="selectedCluster.vmInfo"></div>
+                  <span class="h3 heatmap-chart-title">VM Status</span>
+                  <div id="vmStatusHeatmap" class="heatmap-container" style="height:{{vmsHeatmapChartHeight}};">
+                    <div rhev-heat-map data="selectedCluster.vmStatusData" threshold-range="vmStatusThresholdRange" color-pattern="vmStatusColorPattern" parentid="vmStatusHeatmap"></div>
+                  </div>
+                  <div rhev-heat-map-legend legend="vmStatusLegend" legend-colors="vmStatusColorPattern"></div>
+                </div>
+              </div>
+              <div class="col-xs-12 col-md-3">
+                <div pf-card head-title="Events">
+                  <div class="events-body">
+                    <div class="event-types-container">
+                      <div class="event-type-container" ng-if="selectedCluster.eventsInfo.criticalEvents && selectedCluster.eventsInfo.criticalEvents.length > 0">
+                        <div class="event-type-header">
+                          <span class="event-type-icon pficon pficon-error-circle-o"></span>
+                          <span>{{selectedCluster.eventsInfo.criticalEvents.length}} Critical</span>
+                        </div>
+                        <div class="event-messages">
+                          <div ng-repeat="event in selectedCluster.eventsInfo.criticalEvents">
+                            <span class="message-text">{{event.message}}<span> {{event.date}}</span></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="event-type-container" ng-if="selectedCluster.eventsInfo.warningEvents && selectedCluster.eventsInfo.warningEvents.length > 0">
+                        <div class="event-type-header">
+                          <span class="event-type-icon pficon pficon-warning-triangle-o"></span>
+                          <span>{{selectedCluster.eventsInfo.warningEvents.length}} Warning</span>
+                        </div>
+                        <div class="event-messages">
+                          <div class="event-message" ng-repeat="event in selectedCluster.eventsInfo.warningEvents">
+                            <span class="message-text">{{event.message}}<span> {{event.date}}</span></span>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="event-type-container" ng-if="selectedCluster.eventsInfo.taskEvents && selectedCluster.eventsInfo.taskEvents.length > 0">
+                        <div class="event-type-header">
+                          <span class="pficon fa fa-tasks"></span>
+                          <span>{{selectedCluster.eventsInfo.taskEvents.length}} Running Tasks</span>
+                        </div>
+                        <div class="event-messages">
+                          <div ng-repeat="event in selectedCluster.eventsInfo.taskEvents">
+                            <span class="message-text">{{event.message}}<span> {{event.date}}</span></span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div>
+                      <a class="pull-right">View All Events</a>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('rhev.resources.clusters').controller('resources.clustersController', ['$scope', 'ChartsDataMixin', '$translate', '$resource',
-  function( $scope, chartsDataMixin, $translate, $resource ) {
+angular.module('rhev.resources.clusters').controller('resources.clustersController', ['$scope', 'ChartsDataMixin', '$translate', '$resource', '$timeout',
+  function( $scope, chartsDataMixin, $translate, $resource, $timeout ) {
 
     $scope.clustersListId = 'resources-clusters-list';
 
@@ -124,15 +124,210 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
       actionsConfig: actionsConfig
     };
 
-    var handleClusterClick = function(item) {
-      // Update details view
+    $scope.hostStatusThresholdRange = [1, 2];
+    $scope.hostStatusColorPattern = ['#bee1f4', '#F9D67A', '#bbbbbb'];
+    $scope.hostStatusLegend = ['Running', 'Maintenance', 'Error'];
+    $scope.utilizationLegend = ['< 70%', '70-80%' ,'80-90%', '> 90%'];
+    $scope.hostsHeatmapChartHeight =  '70px';
+
+    $scope.vmStatusThresholdRange = [1, 2, 3];
+    $scope.vmStatusColorPattern = ['#bee1f4', '#F9D67A', '#bbbbbb', '#d1d1d1'];
+    $scope.vmStatusLegend = ['Running', 'Paused', 'Down', 'Unknown'];
+    $scope.vmsHeatmapChartHeight =  '88px';
+
+    var compareFn = function (item1, item2) {
+      return item2.value - item1.value;
     };
 
-    $scope.listConfig = {
+    var getHostStatusData = function(cluster) {
+      var statusData = [];
+
+      cluster.hostData.forEach(function (data) {
+        var nextData = {};
+        if (data.status === 'maintenance')
+        {
+          nextData.value = 1;
+        }
+        else if (data.status === 'error')
+        {
+          nextData.value = 2;
+        }
+        else
+        {
+          nextData.value = 0;
+        }
+        nextData.tooltip = data.id + ": " + data.statusMessage;
+
+        statusData.push(nextData);
+      });
+
+      statusData.sort(compareFn);
+
+      return statusData;
+    };
+
+    var getHostStatusInfo = function(cluster) {
+      var statusInfo = {
+        maintenanceCount: 0,
+        errorCount: 0,
+        runningCount: 0,
+        totalCount: cluster.hostData.length
+      };
+
+      cluster.hostData.forEach(function (data) {
+        var nextData = {};
+        if (data.status === 'maintenance')
+        {
+          statusInfo.maintenanceCount++;
+        }
+        else if (data.status === 'error')
+        {
+          statusInfo.errorCount++;
+        }
+        else
+        {
+          statusInfo.runningCount++;
+        }
+      });
+
+      statusInfo.percentError = Math.round((statusInfo.errorCount / statusInfo.totalCount) * 100.0);
+      statusInfo.percentMaintenance = Math.round((statusInfo.maintenanceCount / statusInfo.totalCount) * 100.0);
+      statusInfo.percentRunning = Math.round((statusInfo.runningCount / statusInfo.totalCount) * 100.0);
+
+      statusInfo.errorTooltip = "Error: " + statusInfo.percentError + "%  (" + statusInfo.errorCount + " of " + statusInfo.totalCount + ")";
+      statusInfo.maintenanceTooltip = "Maintenance: " + statusInfo.percentMaintenance + "%  (" + statusInfo.maintenanceCount + " of " + statusInfo.totalCount + ")";
+      statusInfo.runningTooltip = "Running: " + statusInfo.percentRunning + "%  (" + statusInfo.runningCount + " of " + statusInfo.totalCount + ")";
+
+      return statusInfo;
+    };
+
+    var getHostMemoryData = function(cluster) {
+      var memoryData = [];
+
+      cluster.hostData.forEach(function (data) {
+        var nextData = {
+          memoryUsed: data.memoryUsed,
+          memoryTotal: data.memoryTotal,
+          value: data.memoryUsed / data.memoryTotal
+        };
+        var usedPercent = Math.round(nextData.value * 100);
+        nextData.tooltip = data.id + ":    " + usedPercent + "% Used   (" + data.memoryUsed + " of " + data.memoryTotal + " GB)";
+        memoryData.push(nextData);
+      });
+
+      memoryData.sort(compareFn);
+      return memoryData;
+    };
+
+    var getHostCPUData = function(cluster) {
+      var memoryData = [];
+
+      cluster.hostData.forEach(function (data) {
+        var nextData = {
+          value: data.cpuUsedPercent * 0.01,
+          tooltip: data.id + ":    " + data.cpuUsedPercent + "% Used "
+        };
+        memoryData.push(nextData);
+      });
+
+      memoryData.sort(compareFn);
+      return memoryData;
+    };
+
+    var getVMStatusData = function(cluster) {
+      var statusData = [];
+
+      cluster.vmData.forEach(function (data) {
+        var nextData = {};
+        if (data.status === 'paused')
+        {
+          nextData.value = 1;
+          nextData.statusString = "Paused";
+        }
+        else if (data.status === 'down')
+        {
+          nextData.value = 2;
+          nextData.statusString = "Down";
+        }
+        else if (data.status === 'unknown')
+        {
+          nextData.value = 3;
+          nextData.statusString = "Unknown";
+        }
+        else
+        {
+          nextData.value = 0;
+          nextData.statusString = "Running";
+        }
+        nextData.tooltip = data.id + ": " + nextData.statusString;
+
+        statusData.push(nextData);
+      });
+
+      statusData.sort(compareFn);
+
+      return statusData;
+    };
+
+    var getClusterEvents = function (cluster) {
+      var events = {
+        criticalEvents: [],
+        warningEvents: [],
+        taskEvents: []
+      };
+
+      cluster.events.forEach(function (event) {
+        if (event.severity === 'critical') {
+          events.criticalEvents.push(event);
+        }
+        else if (event.severity === 'warning') {
+          events.warningEvents.push(event);
+        }
+        else if (event.severity === 'task') {
+          events.taskEvents.push(event);
+        }
+      });
+
+      return events;
+    };
+
+    var getSelectedCluster = function(hostId) {
+      var clusterResource = $resource('/resources/clusters/' + hostId);
+      clusterResource.get(function(response) {
+        $scope.selectedCluster = response.data;
+        $scope.selectedCluster.hostsInfo.iconClass = "fa fa-desktop";
+        $scope.selectedCluster.hostStatusData = getHostStatusData($scope.selectedCluster);
+        $scope.selectedCluster.hostStatusInfo = getHostStatusInfo($scope.selectedCluster);
+        $scope.selectedCluster.hostMemoryData = getHostMemoryData($scope.selectedCluster);
+        $scope.selectedCluster.hostCPUData = getHostCPUData($scope.selectedCluster);
+        $scope.selectedCluster.vmInfo.iconClass = "fa fa-laptop";
+        $scope.selectedCluster.vmStatusData = getVMStatusData($scope.selectedCluster);
+
+        $scope.selectedCluster.eventsInfo = getClusterEvents($scope.selectedCluster);
+
+        $timeout(function() {
+          $('[data-toggle="tooltip"]').tooltip();
+        }, 100);
+
+      });
+    };
+
+    var handleSelectionChange = function(items) {
+      // Update details view
+      if (items && items[0] && items[0].uuid !== undefined) {
+        $scope.selectedCluster = getSelectedCluster(items[0].uuid);
+      } else {
+        $scope.selectedCluster = undefined;
+      }
+    };
+
+    $scope.clustersListConfig = {
       selectionMatchProp: 'uuid',
+      selectItems: true,
+      showSelectBox: false,
       selectedItems: [],
       checkDisabled: false,
-      onClick: handleClusterClick
+      onSelectionChange: handleSelectionChange
     };
 
     $scope.clustersLoaded = false;
@@ -142,8 +337,11 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
       $scope.applyFilters();
       $scope.clustersLoaded = true;
       $scope.lastUpdateTime = new Date();
-      console.dir($scope.allClusters);
     });
+
+    $scope.setCurrentSection = function(section) {
+      $scope.currentSection = section;
+    };
 
   }
 ]);

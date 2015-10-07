@@ -157,12 +157,17 @@
   }
 }
 
-.resouces-cluster-list {
+.resources-cluster-list {
+  height: 260px;
+
   .name-column {
     width: 110px;
   }
   .data-center-column {
     width: 170px;
+  }
+  .compatibility-column {
+    width: 180px;
   }
   .cpu-type-column {
     width: 170px;
@@ -180,4 +185,119 @@
       padding-top: 2px;
     }
   }
+}
+
+.rhev-cluster-details {
+  padding-left: 10px;
+  padding-top: 15px;
+
+  .nav-tabs {
+    font-size: 12px;
+  }
+
+  .details-content {
+    margin: 10px 0;
+    padding-top: 10px;
+
+    .card-pf {
+      .card-pf {
+        border-top: none;
+        box-shadow: none;
+      }
+    }
+  }
+  .cluster-total-hosts {
+    padding: 7px 0;
+  }
+
+  .heatmap-container {
+    margin-top: 5px;
+  }
+
+  .host-status {
+
+    .status-bar {
+      text-align: right;
+      padding-left: 5px;
+      padding-right: 5px;
+      margin-bottom: -30px;
+    }
+
+    .host-status-error {
+      background-color: #bbbbbb;
+      height: 15px;
+      position: relative;
+      z-index: 1002;
+    }
+    .host-status-maintenance {
+      background-color: #F9D67A;
+      height: 15px;
+      top: -15px;
+      position: relative;
+      z-index: 1001;
+    }
+    .host-status-running {
+      background-color: #bee1f4;
+      width: 100%;
+      height: 15px;
+      position: relative;
+      top: -30px;
+      z-index: 1000;
+    }
+  }
+
+  .host-utilization .heatmap-container:first-of-type {
+    margin-bottom: 10px;
+  }
+
+  .events-body {
+    height: 241px;
+
+    a {
+      cursor: pointer;
+    }
+  }
+
+  .event-types-container {
+    height:234px;
+    overflow: hidden;
+
+    .event-type-container {
+      display: inline-block;
+      margin-top: 5px;
+    }
+    .event-type-container:first-of-type {
+      margin-top: 0px;
+    }
+  }
+
+  .event-type-header {
+    font-size: 18px;
+
+  }
+  .pficon {
+    vertical-align: middle;
+    margin-right: 5px;
+  }
+
+  .event-messages {
+    .event-message {
+      font-size: 12px;
+    }
+    .message-text {
+      word-wrap: break-word;
+      white-space:normal;
+      width: 300px;
+      float:left;
+
+      span {
+        color: #bbbbbb;
+      }
+    }
+
+  }
+}
+
+.nav-tabs a {
+  cursor: pointer;
 }

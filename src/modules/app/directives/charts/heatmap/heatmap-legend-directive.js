@@ -4,7 +4,8 @@ angular.module('rhev.charts').directive('rhevHeatMapLegend',
     return {
       restrict: 'A',
       scope: {
-        legend: '='
+        legend: '=',
+        legendColors: '=?'
       },
       replace: true,
       templateUrl: 'modules/app/directives/charts/heatmap/heatmap-legend.html',
@@ -12,11 +13,8 @@ angular.module('rhev.charts').directive('rhevHeatMapLegend',
         function($scope, $rootScope) {
           var items = [];
 
-          var getDefaultHeatmapColorPattern = function() {
-            return ['#d4f0fa', '#F9D67A', '#EC7A08', '#CE0000'];
-          };
+          var legendColors = $scope.legendColors || ['#d4f0fa', '#F9D67A', '#EC7A08', '#CE0000'];
 
-          var legendColors = getDefaultHeatmapColorPattern();
           if ($scope.legend) {
             for (var i = $scope.legend.length - 1; i >= 0; i--) {
               items.push({
