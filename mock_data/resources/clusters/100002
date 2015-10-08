@@ -1,12 +1,5 @@
 {
   "data" : {
-    "uuid": "100002",
-    "name": "cluster 2",
-    "dataCenter": "data center 1",
-    "compatibilityVersion": "3.5",
-    "description": "",
-    "cpuType": "intel",
-    "hostCount": 10,
     "hostsInfo": {
       "title": "Hosts",
       "count": 10,

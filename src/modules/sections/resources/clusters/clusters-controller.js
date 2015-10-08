@@ -303,10 +303,12 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
       return events;
     };
 
-    var getSelectedCluster = function(hostId) {
-      var clusterResource = $resource('/resources/clusters/' + hostId);
+    var getSelectedCluster = function(cluster) {
+      var clusterResource = $resource('/resources/clusters/' + cluster.uuid);
       clusterResource.get(function(response) {
         $scope.selectedCluster = response.data;
+        $scope.selectedCluster.uuid = cluster.uuid;
+        $scope.selectedCluster.name = cluster.name;
         $scope.selectedCluster.hostsInfo.iconClass = "fa fa-desktop";
         $scope.selectedCluster.hostStatusData = getHostStatusData($scope.selectedCluster);
         $scope.selectedCluster.hostStatusInfo = getHostStatusInfo($scope.selectedCluster);
@@ -327,7 +329,7 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
     var handleSelectionChange = function(items) {
       // Update details view
       if (items && items[0] && items[0].uuid !== undefined) {
-        $scope.selectedCluster = getSelectedCluster(items[0].uuid);
+        $scope.selectedCluster = getSelectedCluster(items[0]);
       } else {
         $scope.selectedCluster = undefined;
       }
