@@ -303,3 +303,68 @@
 .nav-tabs a {
   cursor: pointer;
 }
+
+.resources-vms-list {
+  .name-column {
+    width: 80px;
+  }
+  .host-column {
+    width: 100px;
+  }
+  .ip-column {
+    width: 150px;
+  }
+  .fqdn-column {
+    width: 170px;
+  }
+  .cluster-column {
+    width: 100px;
+  }
+  .data-center-column {
+    width: 130px;
+  }
+  .memory-column {
+    padding-left: 10px;
+  }
+  .cpu-column {
+    padding-left: 10px;
+  }
+  .memory-column {
+    padding-left: 10px;
+  }
+
+  .percentage-used-bar {
+    width : 80px;
+    height: 15px;
+    float: left;
+    padding: 5px;
+    text-align: right;
+
+    .percentage-used-bar-unused {
+      height: 15px;
+      background-color: #D1D1D1;
+      border: 1px solid #000;
+    }
+    .percentage-used-bar-filled {
+      height: 15px;
+      top: -15px;
+      position: relative;
+      z-index: 100;
+      border: 1px solid #000;
+      border-right: none;
+    }
+    .ok-status {
+      background-color: #d4f0fa;
+    }
+    .warn-status {
+      background-color: #F9D67A;
+    }
+    .error-status {
+      background-color: #EC7A08;
+    }
+    .critical-status {
+      background-color: #CE0000;
+    }
+  }
+
+}

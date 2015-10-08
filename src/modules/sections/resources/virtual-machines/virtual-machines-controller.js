@@ -1,190 +1,223 @@
-angular.module('rhev.dashboard').controller('resources.virtualMachinesController', ['$scope', 'ChartsDataMixin', '$translate', '$resource',
-  function( $scope, chartsDataMixin, $translate, $resource ) {
-    'use strict';
+  'use strict';
 
-    $scope.sparklineChartHeight = chartsDataMixin.dashboardSparklineChartHeight;
-    $scope.dashboardHeatmapChartHeight = chartsDataMixin.dashboardHeatmapChartHeight;
+angular.module('rhev.resources.virtual-machines').controller('resources.virtualMachinesController', ['$scope', '$resource', '$timeout',
+  function( $scope, $resource, $timeout ) {
 
-    $scope.dataCenters = {
-      title: "Data Centers",
-      iconClass: "fa fa-globe",
-      count: 2,
-      notifications:[
-        {
-          iconClass: "pficon pficon-error-circle-o",
-          count: 1
-        }
-      ]
+    $scope.vmsListId = 'vms-vms-list';
+
+    var matchesFilter = function (vm, filter) {
+      var match = true;
+
+      if (filter.id === 'name') {
+        match = vm.name.match(filter.value) !== null;
+      }
+      return match;
     };
 
-    $scope.clusters = {
-      title:"Clusters",
-      iconClass:"fa fa-cubes",
-      count:10,
-      notifications:[
-        {
-          iconClass:"pficon pficon-error-circle-o",
-          count:"1"
+    var matchesFilters = function (vm, filters) {
+      var matches = true;
+
+      filters.forEach(function(filter) {
+        if (!matchesFilter(vm, filter)) {
+          matches = false;
+          return false;
         }
-      ]
+      });
+      return matches;
     };
 
-    $scope.hosts = {
-      title:"Hosts",
-      iconClass:"fa fa-desktop",
-      count:75,
-      notifications:[
+    $scope.applyFilters = function () {
+      if ($scope.toolbarConfig.filterConfig.appliedFilters && $scope.toolbarConfig.filterConfig.appliedFilters.length > 0) {
+        $scope.vms = [];
+        $scope.allVms.forEach(function (vm) {
+          if (matchesFilters(vm, $scope.toolbarConfig.filterConfig.appliedFilters)) {
+            $scope.vms.push(vm);
+          }
+        });
+      } else {
+        $scope.vms = $scope.allVms;
+      }
+      $scope.toolbarConfig.filterConfig.resultsCount = $scope.vms.length;
+    };
+
+    var filterChange = function (filters) {
+      $scope.applyFilters();
+    };
+
+    var filterConfig = {
+      fields: [
         {
-          iconClass:"pficon pficon-error-circle-o",
-          count:"1"
+          id: 'name',
+          title:  'Name',
+          placeholder: 'Filter by Name',
+          filterType: 'text'
+        }
+      ],
+      resultsCount: 0,
+      appliedFilters: [],
+      onFilterChange: filterChange
+    };
+
+    var createVm = function (action) {
+    };
+
+    var editVm = function (action) {
+    };
+
+    var fakeVmAction = function (action) {
+    };
+
+    var actionsConfig = {
+      primaryActions: [
+        {
+          name: 'Create VM',
+          title: 'Create a Virtual Machine',
+          actionFn: createVm
         },
         {
-          iconClass:"pficon pficon-warning-triangle-o",
-          count:"15"
+          name: 'Edit VM',
+          title: 'Edit the selected Virtual Machine',
+          actionFn: editVm
         }
-      ]
-    };
-
-    $scope.storageDomains = {
-      title:"Storage Domains",
-      "type":"projects",
-      iconClass:"fa fa-database",
-      count:510,
-      notifications:[
+      ],
+      moreActions: [
         {
-          iconClass:"pficon pficon-error-circle-o",
-          count:"1"
-        }
-      ]
-    };
-
-    $scope.vms =  {
-      title:"VMs",
-      iconClass:"fa fa-laptop",
-      count:1200,
-      notifications:[
+          name: 'Fake VM Action',
+          title: 'Perform another action',
+          actionFn: fakeVmAction
+        },
         {
-          iconClass:"pficon pficon-error-circle-o",
-          count:3
-        }
-      ]
-    };
-
-    $scope.networks = {
-      title:"Networks",
-      iconClass:"pficon-service",
-      count:2500,
-      notifications:[
+          name: 'Another Action',
+          title: 'Do something else',
+          actionFn: fakeVmAction
+        },
         {
-          iconClass:"pficon pficon-error-circle-o",
-          count:"1"
+          name: 'Disabled Action',
+          title: 'Unavailable action',
+          actionFn: fakeVmAction,
+          isDisabled: true
+        },
+        {
+          name: 'Something Else',
+          title: '',
+          actionFn: fakeVmAction
+        },
+        {
+          isSeparator: true
+        },
+        {
+          name: 'Grouped Action 1',
+          title: 'Do something',
+          actionFn: fakeVmAction
+        },
+        {
+          name: 'Grouped Action 2',
+          title: 'Do something similar',
+          actionFn: fakeVmAction
         }
       ]
     };
 
-
-
-    // Utilization
-    $scope.cpuUsageConfig = chartConfig.cpuUsageConfig;
-    $scope.cpuUsageSparklineConfig = {
-      chartId: 'cpuSparklineChart'
-    };
-    $scope.cpuUsageDonutConfig = {
-      chartId: 'cpuDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+    $scope.toolbarConfig = {
+      filterConfig: filterConfig,
+      actionsConfig: actionsConfig
     };
 
-    $scope.memoryUsageConfig = chartConfig.memoryUsageConfig;
-    $scope.memoryUsageSparklineConfig = {
-      chartId: 'memorySparklineChart'
-    };
-    $scope.memoryUsageDonutConfig = {
-      chartId: 'memoryDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+    var compareFn = function (item1, item2) {
+      return item2.value - item1.value;
     };
 
-    $scope.networkUsageConfig = chartConfig.networkUsageConfig;
-    $scope.networkUsageSparklineConfig = {
-      chartId: 'networkSparklineChart'
-    };
-    $scope.networkUsageDonutConfig = {
-      chartId: 'networkDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+    var getMemoryInfo = function(vm) {
+      var info = {
+        percentUsed: Math.round((vm.memoryUsed / vm.memoryTotal) * 100.0)
+      };
+
+      info.usedTooltip = info.percentUsed + "% Used   (" + vm.memoryUsed + " of " + vm.memoryTotal + " GB)";
+
+      if (info.percentUsed < 70) {
+        info.statusClass = 'ok-status';
+      }
+      else if (info.percentUsed < 80) {
+        info.statusClass = 'warn-status';
+      }
+      else if (info.percentUsed < 90) {
+        info.statusClass = 'error-status';
+      }
+      else {
+        info.statusClass = 'critical-status';
+      }
+
+      return info;
     };
 
-    $scope.storageUsageConfig = chartConfig.storageUsageConfig;
-    $scope.storageUsageSparklineConfig = {
-      chartId: 'storageSparklineChart'
-    };
-    $scope.storageUsageDonutConfig = {
-      chartId: 'storageDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+    var getCpuInfo = function(vm) {
+      var info = {
+        percentUsed: vm.cpuUsedPercent,
+        usedTooltip: '',
+        availableTooltip: ''
+      };
+
+      if (info.percentUsed < 70) {
+        info.statusClass = 'ok-status';
+      }
+      else if (info.percentUsed < 80) {
+        info.statusClass = 'warn-status';
+      }
+      else if (info.percentUsed < 90) {
+        info.statusClass = 'error-status';
+      }
+      else {
+        info.statusClass = 'critical-status';
+      }
+      return info;
     };
 
-    $scope.utilizationLoadingDone = false;
-    var ContainersUtilization = $resource('/dashboard/utilization');
-    ContainersUtilization.get(function(response) {
-      $scope.cpuUsageData = chartsDataMixin.getCpuUsageDataFromResponse(response, $scope.cpuUsageConfig.usageDataName);
-      $scope.memoryUsageData = chartsDataMixin.getMemoryUsageDataFromResponse(response, $scope.memoryUsageConfig.usageDataName);
-      $scope.networkUsageData = chartsDataMixin.getNetworkUsageDataFromResponse(response, $scope.networkUsageConfig.usageDataName);
-      $scope.storageUsageData = chartsDataMixin.getStorageUsageDataFromResponse(response, $scope.storageUsageConfig.usageDataName);
-      $scope.utilizationLoadingDone = true;
+    var getNetworkInfo = function(vm) {
+      var info = {
+        percentUsed: Math.round((vm.networkUsed / vm.networkTotal) * 100.0)
+      };
+
+      info.usedTooltip = info.percentUsed + "% Used   (" + vm.networkUsed + " of " + vm.networkTotal + " GB)";
+
+      if (info.percentUsed < 70) {
+        info.statusClass = 'ok-status';
+      }
+      else if (info.percentUsed < 80) {
+        info.statusClass = 'warn-status';
+      }
+      else if (info.percentUsed < 90) {
+        info.statusClass = 'error-status';
+      }
+      else {
+        info.statusClass = 'critical-status';
+      }
+
+      return info;
+    };
+
+    var handleVmClick = function(item) {
+      $location.path('/resources/virtual-machines/' + item.uuid);
+    };
+
+    $scope.vmsListConfig = {
+      selectionMatchProp: 'uuid',
+      selectedItems: [],
+      checkDisabled: false,
+      onClick: handleVmClick
+    };
+
+    $scope.vmsLoaded = false;
+    var vmsResource = $resource('/resources/virtual-machines/all');
+    vmsResource.get(function(response) {
+      $scope.allVms = response["virtual-machines"];
+      $scope.allVms.forEach(function (vm) {
+        vm.memoryInfo = getMemoryInfo(vm);
+        vm.cpuInfo = getCpuInfo(vm);
+        vm.networkInfo = getNetworkInfo(vm);
+      });
+      $scope.applyFilters();
+      $scope.vmsLoaded = true;
+      $scope.lastUpdateTime = new Date();
     });
-
-    // HeatMaps
-
-    $scope.nodeCpuUsage = {
-      title: 'CPU',
-      id: 'nodeCpuUsageMap',
-      loadingDone: false
-    };
-    $scope.nodeMemoryUsage = {
-      title: 'Memory',
-      id: 'nodeMemoryUsageMap',
-      loadingDone: false
-    };
-
-    $scope.nodeNetworkUsage = {
-      title: 'Network',
-      id: 'nodeNetworkUsageMap',
-      loadingDone: false
-    };
-    $scope.nodeStorageUsage = {
-      title: 'Storage',
-      id: 'nodeStorageUsageMap',
-      loadingDone: false
-    };
-
-    $scope.heatmaps = [$scope.nodeCpuUsage, $scope.nodeMemoryUsage, $scope.nodeNetworkUsage, $scope.nodeStorageUsage];
-
-    var NodeCpuUsage = $resource('/dashboard/node-cpu-usage');
-    NodeCpuUsage.get(function(response) {
-      var data = response.data;
-      $scope.nodeCpuUsage.data = data.nodeCpuUsage;
-      $scope.nodeCpuUsage.loadingDone = true;
-    });
-
-    var NodeMemoryUsage = $resource('/dashboard/node-memory-usage');
-    NodeMemoryUsage.get(function(response) {
-      var data = response.data;
-      $scope.nodeMemoryUsage.data = data.nodeMemoryUsage;
-      $scope.nodeMemoryUsage.loadingDone = true;
-    });
-
-    var NodeNetworkUsage = $resource('/dashboard/node-network-usage');
-    NodeNetworkUsage.get(function(response) {
-      var data = response.data;
-      $scope.nodeNetworkUsage.data = data.nodeNetworkUsage;
-      $scope.nodeNetworkUsage.loadingDone = true;
-    });
-
-    var NodeStorageUsage = $resource('/dashboard/node-storage-usage');
-    NodeStorageUsage.get(function(response) {
-      var data = response.data;
-      $scope.nodeStorageUsage.data = data.nodeStorageUsage;
-      $scope.nodeStorageUsage.loadingDone = true;
-    });
-
-    $scope.nodeHeatMapUsageLegendLabels = chartsDataMixin.nodeHeatMapUsageLegendLabels;
   }
 ]);

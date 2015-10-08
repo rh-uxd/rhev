@@ -1,7 +1,97 @@
-<div class="container-fluid container-tiles-pf containers-dashboard">
+<div class="container-fluid ">
+  <ol class="breadcrumb" style="margin-bottom: 0px;">
+    <li class="active"><a href="#/resources">Resources</a></li>
+    <li>Virtual Machines</li>
+  </ol>
   <div class="row row-tile-pf" >
-    <div class="col-xs-6 col-sm-6 col-md-2">
-      <div pf-card head-title="Virtual Machines Placeholder" show-top-border="true"></div>
+    <div class="col-xs-12">
+      <div pf-card>
+        <div>
+          <div class="rhev-table-header">
+            <span class="rhev-table-title pull-left">Virtual Machines</span>
+            <div class="card-pf-cell pull-right" style="padding-top: 4px;">
+              <span class="rhev-field-title">Last Updated:</span>
+              <span class="rhev-field-value">{{lastUpdateTime | date:'yyyy-MM-dd HH:mm a'}}</span>
+            </div>
+          </div>
+          <div class="rhev-table-contents container-fluid">
+            <div pf-data-toolbar class="row" config="toolbarConfig"></div>
+            <div pf-data-list class="resources-vms-list row" id="{{vmsListId}}" config="vmsListConfig" items="vms" ng-if="vmsLoaded">
+              <div class="row">
+                <table>
+                  <tr>
+                    <td class="rhev-column name-column">
+                      <span class="rhev-label">{{item.name}}</span>
+                    </td>
+                    <td class="rhev-column rhev-object-column host-column">
+                      <span class="pficon fa fa-desktop rhev-icon-label"></span>
+                      <span class="rhev-label">{{item.host}}</span>
+                    </td>
+                    <td class="rhev-field-column ip-column">
+                      <span class="rhev-label rhev-title">IP Address: </span>
+                      <span class="rhev-label">{{item.ipAddress}}</span>
+                    </td>
+                    <td class="rhev-field-column fqdn-column">
+                      <span class="rhev-label rhev-title">FQDN: </span>
+                      <span class="rhev-label">{{item.fqdn}}</span>
+                    </td>
+                    <td class="rhev-column rhev-object-column cluster-column">
+                      <span class="pficon fa fa-cubes rhev-icon-label"></span>
+                      <span class="rhev-label">{{item.cluster}}</span>
+                    </td>
+                    <td class="rhev-column rhev-object-column data-center-column">
+                      <span class="pficon fa fa-globe rhev-icon-label"></span>
+                      <span class="rhev-label">{{item.dataCenter}}</span>
+                    </td>
+                    <td class="rhev-field-column memory-column">
+                      <span class="rhev-label rhev-title">Memory: </span>
+                      <div class="percentage-used-bar">
+                        <div class="percentage-used-bar-unused" data-toggle="tooltip" data-placement="top" title=""
+                             data-original-title="{{item.memoryInfo.availableTooltip}}">
+                        </div>
+                        <div class="percentage-used-bar-filled"
+                             ng-class="item.memoryInfo.statusClass"
+                             style="width:{{item.memoryInfo.percentUsed}}%;"
+                             data-toggle="tooltip" data-placement="top" title=""
+                             data-original-title="{{item.memoryInfo.usedTooltip}}">
+                        </div>
+                      </div>
+                    </td>
+                    <td class="rhev-field-column cpu-column">
+                      <span class="rhev-label rhev-title">CPU: </span>
+                      <div class="percentage-used-bar">
+                        <div class="percentage-used-bar-unused" data-toggle="tooltip" data-placement="top" title=""
+                             data-original-title="{{item.cpuInfo.availableTooltip}}">
+                        </div>
+                        <div class="percentage-used-bar-filled"
+                             ng-class="item.cpuInfo.statusClass"
+                             style="width:{{item.cpuInfo.percentUsed}}%;"
+                             data-toggle="tooltip" data-placement="top" title=""
+                             data-original-title="{{item.cpuInfo.usedTooltip}}">
+                        </div>
+                      </div>
+                    </td>
+                    <td class="rhev-field-column memory-column">
+                      <span class="rhev-label rhev-title">Network: </span>
+                      <div class="percentage-used-bar">
+                        <div class="percentage-used-bar-unused" data-toggle="tooltip" data-placement="top" title=""
+                             data-original-title="{{item.networkInfo.availableTooltip}}">
+                        </div>
+                        <div class="percentage-used-bar-filled"
+                             ng-class="item.networkInfo.statusClass"
+                             style="width:{{item.networkInfo.percentUsed}}%;"
+                             data-toggle="tooltip" data-placement="top" title=""
+                             data-original-title="{{item.networkInfo.usedTooltip}}">
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

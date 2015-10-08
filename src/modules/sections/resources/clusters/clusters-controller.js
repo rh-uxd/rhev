@@ -41,8 +41,20 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
     };
 
     var filterChange = function (filters) {
-      $rootScope.resourcesClustersFilters = filters;
+      var me = $scope;
       $scope.applyFilters();
+      if ($scope.selectedCluster) {
+        var found = false;
+        $scope.clusters.forEach(function(cluster) {
+          if (cluster.uuid === me.selectedCluster.uuid) {
+            found = true;
+          }
+        });
+        if (!found) {
+          $scope.selectedCluster = undefined;
+          $scope.clustersListConfig.selectedItems = [];
+        }
+      }
     };
 
     var filterConfig = {
@@ -342,6 +354,5 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
     $scope.setCurrentSection = function(section) {
       $scope.currentSection = section;
     };
-
   }
 ]);
