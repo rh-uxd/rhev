@@ -8,7 +8,7 @@
     "cpuType": "intel",
     "hostsInfo": {
       "title": "Hosts",
-      "count": 10,
+      "count": 5,
       "notifications" : [
         {
           "iconClass": "pficon pficon-error-circle-o",
