@@ -161,7 +161,16 @@
     width: 32px;
   }
 
+  .rhev-label.rhev-count-label {
+    float: left;
+    text-align: right;
+    line-height: 24px;
+    text-align: right;
+    width: 64px;
+  }
+
   .rhev-icon-label {
+    float: left;
     color: #515151;
     font-size: 18px;
     vertical-align: middle;
@@ -170,6 +179,7 @@
   }
   .pficon.rhev-icon-label {
     color: #1186C1;
+    padding-top: 4px;
   }
 }
 
@@ -188,11 +198,22 @@
   .cpu-type-column {
     width: 170px;
   }
-  .host-count-column {
-    width: 150px;
+  .host-column {
+    width: 95px;
+
+    .rhev-count {
+      width: 55px;
+    }
+  }
+  .vm-column {
+    width: 160px;
+
+    .rhev-count {
+      width: 120px;
+    }
   }
   .description-column {
-    padding-left: 25px;
+    padding-left: 10px;
     .description {
       word-wrap: break-word;
       white-space:normal;

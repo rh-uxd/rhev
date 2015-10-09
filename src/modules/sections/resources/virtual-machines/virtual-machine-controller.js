@@ -71,14 +71,14 @@ angular.module('rhev.resources.virtual-machines')
     $scope.bandwidthInConfig = {
       chartId  : 'bandwidthInChart',
       units    : 'MBps',
-      dataName: 'MBpx',
+      dataName: 'MBps',
       tooltipType: 'valuePerDay'
     };
 
     $scope.bandwidthOutConfig = {
       chartId  : 'bandwidthOutChart',
       units    : 'MBps',
-      dataName: 'MBpx',
+      dataName: 'MBps',
       tooltipType: 'valuePerDay'
     };
 

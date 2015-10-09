@@ -7,7 +7,8 @@
           "compatibilityVersion": "3.5",
           "description": "",
           "cpuType": "intel",
-          "hostCount": 13
+          "hostCount": 13,
+          "vmCount": 40
        },
        {
           "uuid": "100002",
@@ -16,7 +17,8 @@
           "compatibilityVersion": "3.5",
           "description": "",
           "cpuType": "intel",
-          "hostCount": 10
+          "hostCount": 10,
+          "vmCount": 40
        },
        {
           "uuid": "100003",
@@ -25,7 +27,8 @@
           "compatibilityVersion": "3.5",
           "description": "",
           "cpuType": "intel",
-          "hostCount": 5
+          "hostCount": 5,
+          "vmCount": 40
        },
        {
           "uuid": "100004",
@@ -34,7 +37,8 @@
           "compatibilityVersion": "3.5",
           "description": "",
           "cpuType": "intel",
-          "hostCount": 13
+          "hostCount": 13,
+          "vmCount": 40
        },
        {
           "uuid": "100005",
@@ -43,7 +47,8 @@
           "compatibilityVersion": "3.5",
           "description": "",
           "cpuType": "intel",
-          "hostCount": 8
+          "hostCount": 8,
+          "vmCount": 40
        }
    ]
 }

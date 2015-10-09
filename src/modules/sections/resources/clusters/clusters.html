@@ -35,14 +35,20 @@
                       <span class="rhev-label rhev-title">Cluster CPU Type: </span>
                       <span class="rhev-label">{{item.cpuType}}</span>
                     </td>
-                    <td class="rhev-field-column host-count-column">
-                      <span class="rhev-label rhev-title">Host Count: </span>
-                      <span class="rhev-label rhev-count">{{item.hostCount}}</span>
+                    <td class="rhev-column rhev-object-column host-column">
+                      <span class="pficon fa fa-desktop rhev-icon-label"></span>
+                      <span class="rhev-label rhev-count">{{item.hostCount}} Hosts</span>
                     </td>
-                    <TD class="rhev-field-column description-column">
+                    <td class="rhev-column rhev-object-column vm-column">
+                      <a href="">
+                        <span class="pficon fa fa-laptop rhev-icon-label"></span>
+                        <span class="rhev-label rhev-count">{{item.vmCount}} Virtual Machines</span>
+                      </a>
+                    </td>
+                    <td class="rhev-field-column description-column">
                       <span class="rhev-label rhev-title">Description: </span>
                       <label class="rhev-label description">{{item.description}}</label>
-                    </TD>
+                    </td>
                   </tr>
                 </table>
               </div>
