@@ -8,7 +8,8 @@ angular.module( 'rhev.appModule', [
   'rhev.navigation',
   'rhev.sections',
   'rhev.card',
-  'rhev.charts'
+  'rhev.charts',
+  'rhev.misc'
 ] )
   .config( ['$routeProvider', '$translateProvider',
     function( $routeProvider, $translateProvider ) {
