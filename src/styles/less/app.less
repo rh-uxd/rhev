@@ -25,9 +25,25 @@
 
 .breadcrumb {
   margin-top: -20px;
+  padding-right: 0px;
+  margin: -20px -10px 0 -10px;
+
+  .toolbar-pf-view-selector .active a {
+    color: #0099d3;
+    cursor: default;
+  }
+  .toolbar-pf-view-selector a {
+    cursor: pointer;
+    color: #222222;
+  }
+  .toolbar-pf-view-selector a:hover {
+    color: #0099d3;
+  }
 }
 
-
+.breadcrumb-view-selector {
+  display: block
+}
 /*
  * Charts
  */
@@ -250,16 +266,19 @@
     margin-bottom: 10px;
   }
 
-  .events-body {
-    height: 241px;
+}
 
-    a {
+.events-container {
+  .events-body {
+    display: inline-block;
+
+    .events-viewer-button {
       cursor: pointer;
+      padding-bottom: 5px;
     }
   }
 
   .event-types-container {
-    height:234px;
     overflow: hidden;
 
     .event-type-container {
@@ -296,8 +315,15 @@
         color: #bbbbbb;
       }
     }
-
   }
+}
+
+.rhev-cluster-details .events-container .event-types-container {
+  height: 216px;
+}
+
+.resources-vm-page .events-container .event-types-container {
+  height: 345px;
 }
 
 .nav-tabs a {
@@ -366,5 +392,11 @@
       background-color: #CE0000;
     }
   }
+}
 
+.resources-vm-page {
+  .toolbar-pf {
+    padding-bottom: 10px;
+    border-bottom: none;
+  }
 }

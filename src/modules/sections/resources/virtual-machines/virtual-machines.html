@@ -45,44 +45,23 @@
                     </td>
                     <td class="rhev-field-column memory-column">
                       <span class="rhev-label rhev-title">Memory: </span>
-                      <div class="percentage-used-bar">
-                        <div class="percentage-used-bar-unused" data-toggle="tooltip" data-placement="top" title=""
-                             data-original-title="{{item.memoryInfo.availableTooltip}}">
-                        </div>
-                        <div class="percentage-used-bar-filled"
-                             ng-class="item.memoryInfo.statusClass"
-                             style="width:{{item.memoryInfo.percentUsed}}%;"
-                             data-toggle="tooltip" data-placement="top" title=""
-                             data-original-title="{{item.memoryInfo.usedTooltip}}">
-                        </div>
+                      <div class="percentage-used-bar" data-toggle="tooltip" data-placement="{{$index > 1 ? 'top' : 'bottom'}}" title="" data-original-title="{{item.memoryInfo.tooltip}}">
+                        <div class="percentage-used-bar-unused"></div>
+                        <div class="percentage-used-bar-filled" ng-class="item.memoryInfo.statusClass" style="width:{{item.memoryInfo.percentUsed}}%;"></div>
                       </div>
                     </td>
                     <td class="rhev-field-column cpu-column">
                       <span class="rhev-label rhev-title">CPU: </span>
-                      <div class="percentage-used-bar">
-                        <div class="percentage-used-bar-unused" data-toggle="tooltip" data-placement="top" title=""
-                             data-original-title="{{item.cpuInfo.availableTooltip}}">
-                        </div>
-                        <div class="percentage-used-bar-filled"
-                             ng-class="item.cpuInfo.statusClass"
-                             style="width:{{item.cpuInfo.percentUsed}}%;"
-                             data-toggle="tooltip" data-placement="top" title=""
-                             data-original-title="{{item.cpuInfo.usedTooltip}}">
-                        </div>
+                      <div class="percentage-used-bar" data-toggle="tooltip" data-placement="{{$index > 1 ? 'top' : 'bottom'}}" title="" data-original-title="{{item.cpuInfo.tooltip}}">
+                        <div class="percentage-used-bar-unused"></div>
+                        <div class="percentage-used-bar-filled" ng-class="item.cpuInfo.statusClass" style="width:{{item.cpuInfo.percentUsed}}%;"></div>
                       </div>
                     </td>
                     <td class="rhev-field-column memory-column">
                       <span class="rhev-label rhev-title">Network: </span>
-                      <div class="percentage-used-bar">
-                        <div class="percentage-used-bar-unused" data-toggle="tooltip" data-placement="top" title=""
-                             data-original-title="{{item.networkInfo.availableTooltip}}">
-                        </div>
-                        <div class="percentage-used-bar-filled"
-                             ng-class="item.networkInfo.statusClass"
-                             style="width:{{item.networkInfo.percentUsed}}%;"
-                             data-toggle="tooltip" data-placement="top" title=""
-                             data-original-title="{{item.networkInfo.usedTooltip}}">
-                        </div>
+                      <div class="percentage-used-bar" data-toggle="tooltip" data-placement="{{$index > 1 ? 'top' : 'bottom'}}" title="" data-original-title="{{item.networkInfo.tooltip}}">
+                        <div class="percentage-used-bar-unused"> </div>
+                        <div class="percentage-used-bar-filled" ng-class="item.networkInfo.statusClass" style="width:{{item.networkInfo.percentUsed}}%;"></div>
                       </div>
                     </td>
                   </tr>

@@ -21,6 +21,7 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
       title:"Clusters",
       iconClass:"fa fa-cubes",
       count:10,
+      href: '#/resources/clusters',
       notifications:[
         {
           iconClass:"pficon pficon-error-circle-o",
@@ -62,6 +63,7 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
       title:"VMs",
       iconClass:"fa fa-laptop",
       count:1200,
+      href: '#/resources/virtual-machines',
       notifications:[
         {
           iconClass:"pficon pficon-error-circle-o",

@@ -43,6 +43,10 @@ angular.module( 'rhev.resources',
         templateUrl: 'modules/sections/resources/virtual-machines/virtual-machines.html',
         controller: 'resources.virtualMachinesController'
       })
+      .when('/resources/virtual-machines/:id', {
+        templateUrl: 'modules/sections/resources/virtual-machines/virtual-machine.html',
+        controller: 'resources.virtualMachineController'
+      })
       .when('/resources/capacity-planning', {
         templateUrl: 'modules/sections/resources/capacity-planning/capacity-planning.html',
         controller: 'resources.capacityPlanningController'

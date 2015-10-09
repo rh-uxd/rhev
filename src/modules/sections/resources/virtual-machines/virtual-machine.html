@@ -1,0 +1,208 @@
+<div class="container-fluid resources-vm-page">
+
+  <ol class="breadcrumb row" style="margin-bottom: 0px; ">
+    <li class="active"><a href="#/resources">Resources</a></li>
+    <li class="active"><a href="#/resources/virtual-machines">Virtual Machines</a></li>
+    <li>{{vm.name}}</li>
+    <div class="toolbar-pf-view-selector pull-right">
+      <ul class="list-inline">
+        <li ng-repeat="view in viewsList"
+            ng-class="{'active': view.id === currentView}"
+            title={{view.title}}>
+          <a>
+            <i class="view-selector {{view.iconClass}}" ng-click="viewSelected(view.id)"></i>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </ol>
+
+  <div ng-if="currentView === 'dashboardView'">
+    <div class="row row-tile-pf" >
+      <div class="col-xs-7 col-sm-7 col-md-7">
+        <div pf-card head-title="Virtual Machine Utilization" hidetopborder="true">
+          <div class="row" ng-if="loadingDone">
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <div pf-utilization-chart
+                   config="cpuUsageConfig"
+                   donut-config="cpuUsageDonutConfig"
+                   sparkline-config="cpuUsageSparklineConfig"
+                   chart-data="cpuUsageData">
+
+              </div>
+              <span class="trend-footer-pf">Last 30 Days</span>
+            </div>
+            <div class="col-xs-6 col-sm-6 col-md-6">
+              <div pf-utilization-chart
+                   config="memoryUsageConfig"
+                   donut-config="memoryUsageDonutConfig"
+                   sparkline-config="memoryUsageSparklineConfig"
+                   chart-data="memoryUsageData"></div>
+            </div>
+            <span class="trend-footer-pf">Last 30 Days</span>
+          </div>
+          <div ng-if="!loadingDone" class="spinner spinner-lg loading"></div>
+        </div>
+      </div>
+      <div class="col-xs-5 col-sm-5 col-md-5">
+        <div pf-card class="events-container" head-title="Events">
+          <div class="events-body">
+            <div class="event-types-container">
+              <div class="event-type-container" ng-if="events.criticalEvents && events.criticalEvents.length > 0">
+                <div class="event-type-header">
+                  <span class="event-type-icon pficon pficon-error-circle-o"></span>
+                  <span>{{events.criticalEvents.length}} Critical</span>
+                </div>
+                <div class="event-messages">
+                  <div ng-repeat="event in events.criticalEvents">
+                    <span class="message-text">{{event.message}}<span> {{event.date}}</span></span>
+                  </div>
+                </div>
+              </div>
+              <div class="event-type-container" ng-if="events.warningEvents && events.warningEvents.length > 0">
+                <div class="event-type-header">
+                  <span class="event-type-icon pficon pficon-warning-triangle-o"></span>
+                  <span>{{events.warningEvents.length}} Warning</span>
+                </div>
+                <div class="event-messages">
+                  <div class="event-message" ng-repeat="event in events.warningEvents">
+                    <span class="message-text">{{event.message}}<span> {{event.date}}</span></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div>
+              <a class="pull-right events-viewer-button">View All Events</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="row row-tile-pf">
+      <div class="col-md-7">
+        <div pf-card head-title="Virtual Machine Performance" sub-title="Last 7 Days - Total Used">
+          <div class="row" ng-if="loadingDone">
+            <div class="col-md-4">
+              <div pf-trends-chart config="iopsTrendsConfig" chart-data="iopsTrendData" ng-if="loadingDone"></div>
+            </div>
+            <div class="col-md-4">
+              <div pf-trends-chart config="ioBandWidthTrendsConfig" chart-data="ioBandWidthData" ng-if="loadingDone"></div>
+            </div>
+            <div class="col-md-4">
+              <div pf-trends-chart config="ioLatencyTrendsConfig" chart-data="ioLatencyData" ng-if="loadingDone"></div>
+            </div>
+          </div>
+          <div ng-if="!loadingDone" class="spinner spinner-lg loading"></div>
+        </div>
+      </div>
+      <div class="col-md-5">
+        <div pf-card head-title="Virtual Machine Networking" sub-title="Last 7 Days">
+          <div class="row" ng-if="loadingDone">
+            <div class="col-md-6">
+              <div pf-trends-chart config="bandwidthInConfig" chart-data="bandwidthInData" ng-if="loadingDone"></div>
+            </div>
+            <div class="col-md-6">
+              <div pf-trends-chart config="bandwidthOutConfig" chart-data="bandwidthOutData" ng-if="loadingDone"></div>
+            </div>
+          </div>
+          <div ng-if="!loadingDone" class="spinner spinner-lg loading"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div ng-if="currentView === 'tableView'">
+    <ul class="nav nav-tabs nav-tabs-pf">
+      <li ng-class="{active: currentSection == 'general' || !currentSection}"  ng-click="setCurrentSection('general')">     <a>General</a></li>
+      <li ng-class="{active: currentSection == 'network'}"                     ng-click="setCurrentSection('network')">     <a>Network Interface</a></li>
+      <li ng-class="{active: currentSection == 'disks'}"                       ng-click="setCurrentSection('disks')">       <a>Disks</a></li>
+      <li ng-class="{active: currentSection == 'snapshots'}"                   ng-click="setCurrentSection('snapshots')">   <a>Snapshots</a></li>
+      <li ng-class="{active: currentSection == 'application'}"                 ng-click="setCurrentSection('application')"> <a>Application</a></li>
+      <li ng-class="{active: currentSection == 'groups'}"                      ng-click="setCurrentSection('groups')">      <a>Affinity Groups</a></li>
+      <li ng-class="{active: currentSection == 'permissions'}"                 ng-click="setCurrentSection('permissions')"> <a>Permissions</a></li>
+      <li ng-class="{active: currentSection == 'sessions'}"                    ng-click="setCurrentSection('sessions')">    <a>Sessions</a></li>
+    </ul>
+    <div class="container-fluid container-tiles-pf details-content rhev-body" ng-switch on="currentSection" style="min-height: 375px;">
+      <div class="row row-tile-pf" ng-switch-default>
+        <div class="blank-slate-pf">
+          <div class="blank-slate-pf-icon">
+            <i class="fa fa-cog fa-spin"></i>
+          </div>
+          <h1>General - Not Yet Implemented</h1>
+          <p>Sorry, this section has not yet been implemented. Don't blame me, contact <a href="mailto:sdoyle@redhat.com?Subject=Please%20Get%20Jeff%20A%20Raise" target="_top">Serena Doyle</a> for more information.
+          </p>
+        </div>
+      </div>
+      <div class="row row-tile-pf" ng-switch-when="network">
+        <div class="blank-slate-pf">
+          <div class="blank-slate-pf-icon">
+            <i class="fa fa-cog fa-spin"></i>
+          </div>
+          <h1>Network Interface - Not Yet Implemented</h1>
+          <p>Sorry, this section has not yet been implemented. Don't blame me, contact <a href="mailto:sdoyle@redhat.com?Subject=Please%20Get%20Jeff%20A%20Raise" target="_top">Serena Doyle</a> for more information.
+          </p>
+        </div>
+      </div>
+      <div class="row row-tile-pf" ng-switch-when="disks">
+        <div class="blank-slate-pf">
+          <div class="blank-slate-pf-icon">
+            <i class="fa fa-cog fa-spin"></i>
+          </div>
+          <h1>Disks - Not Yet Implemented</h1>
+          <p>Sorry, this section has not yet been implemented. Don't blame me, contact <a href="mailto:sdoyle@redhat.com?Subject=Please%20Get%20Jeff%20A%20Raise" target="_top">Serena Doyle</a> for more information.
+          </p>
+        </div>
+      </div>
+      <div class="row row-tile-pf" ng-switch-when="snapshots">
+        <div class="blank-slate-pf">
+          <div class="blank-slate-pf-icon">
+            <i class="fa fa-cog fa-spin"></i>
+          </div>
+          <h1>Snapshots - Not Yet Implemented</h1>
+          <p>Sorry, this section has not yet been implemented. Don't blame me, contact <a href="mailto:sdoyle@redhat.com?Subject=Please%20Get%20Jeff%20A%20Raise" target="_top">Serena Doyle</a> for more information.
+          </p>
+        </div>
+      </div>
+      <div class="row row-tile-pf" ng-switch-when="application">
+        <div class="blank-slate-pf">
+          <div class="blank-slate-pf-icon">
+            <i class="fa fa-cog fa-spin"></i>
+          </div>
+          <h1>Application - Not Yet Implemented</h1>
+          <p>Sorry, this section has not yet been implemented. Don't blame me, contact <a href="mailto:sdoyle@redhat.com?Subject=Please%20Get%20Jeff%20A%20Raise" target="_top">Serena Doyle</a> for more information.
+          </p>
+        </div>
+      </div>
+      <div class="row row-tile-pf" ng-switch-when="groups">
+        <div class="blank-slate-pf">
+          <div class="blank-slate-pf-icon">
+            <i class="fa fa-cog fa-spin"></i>
+          </div>
+          <h1>Affinity Groups - Not Yet Implemented</h1>
+          <p>Sorry, this section has not yet been implemented. Don't blame me, contact <a href="mailto:sdoyle@redhat.com?Subject=Please%20Get%20Jeff%20A%20Raise" target="_top">Serena Doyle</a> for more information.
+          </p>
+        </div>
+      </div>
+      <div class="row row-tile-pf" ng-switch-when="permissions">
+        <div class="blank-slate-pf">
+          <div class="blank-slate-pf-icon">
+            <i class="fa fa-cog fa-spin"></i>
+          </div>
+          <h1>Permissions - Not Yet Implemented</h1>
+          <p>Sorry, this section has not yet been implemented. Don't blame me, contact <a href="mailto:sdoyle@redhat.com?Subject=Please%20Get%20Jeff%20A%20Raise" target="_top">Serena Doyle</a> for more information.
+          </p>
+        </div>
+      </div>
+      <div class="row row-tile-pf" ng-switch-when="sessions">
+        <div class="blank-slate-pf">
+          <div class="blank-slate-pf-icon">
+            <i class="fa fa-cog fa-spin"></i>
+          </div>
+          <h1>Sessions - Not Yet Implemented</h1>
+          <p>Sorry, this section has not yet been implemented. Don't blame me, contact <a href="mailto:sdoyle@redhat.com?Subject=Please%20Get%20Jeff%20A%20Raise" target="_top">Serena Doyle</a> for more information.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

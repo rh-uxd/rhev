@@ -1,7 +1,7 @@
   'use strict';
 
-angular.module('rhev.resources.virtual-machines').controller('resources.virtualMachinesController', ['$scope', '$resource', '$timeout',
-  function( $scope, $resource, $timeout ) {
+angular.module('rhev.resources.virtual-machines').controller('resources.virtualMachinesController', ['$scope', '$resource', '$timeout', '$location',
+  function( $scope, $resource, $timeout, $location ) {
 
     $scope.vmsListId = 'vms-vms-list';
 
@@ -132,7 +132,7 @@ angular.module('rhev.resources.virtual-machines').controller('resources.virtualM
         percentUsed: Math.round((vm.memoryUsed / vm.memoryTotal) * 100.0)
       };
 
-      info.usedTooltip = info.percentUsed + "% Used   (" + vm.memoryUsed + " of " + vm.memoryTotal + " GB)";
+      info.tooltip = info.percentUsed + "% Used   (" + vm.memoryUsed + " of " + vm.memoryTotal + " GB)";
 
       if (info.percentUsed < 70) {
         info.statusClass = 'ok-status';
@@ -157,6 +157,8 @@ angular.module('rhev.resources.virtual-machines').controller('resources.virtualM
         availableTooltip: ''
       };
 
+      info.tooltip = info.percentUsed + "% Used";
+
       if (info.percentUsed < 70) {
         info.statusClass = 'ok-status';
       }
@@ -177,7 +179,7 @@ angular.module('rhev.resources.virtual-machines').controller('resources.virtualM
         percentUsed: Math.round((vm.networkUsed / vm.networkTotal) * 100.0)
       };
 
-      info.usedTooltip = info.percentUsed + "% Used   (" + vm.networkUsed + " of " + vm.networkTotal + " GB)";
+      info.tooltip = info.percentUsed + "% Used   (" + vm.networkUsed + " of " + vm.networkTotal + " GB)";
 
       if (info.percentUsed < 70) {
         info.statusClass = 'ok-status';
@@ -218,6 +220,10 @@ angular.module('rhev.resources.virtual-machines').controller('resources.virtualM
       $scope.applyFilters();
       $scope.vmsLoaded = true;
       $scope.lastUpdateTime = new Date();
+      $timeout(function() {
+        $('[data-toggle="tooltip"]').tooltip();
+      }, 100);
+
     });
   }
 ]);
