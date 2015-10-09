@@ -1,6 +1,38 @@
 {
   "data" : {
-        "name" : "vm 1",
+        "name" : "vm 20",
+        "events" : [
+          {
+            "severity" : "critical",
+            "date": "2 min ago",
+            "message": "First critical message could go here."
+          },
+          {
+            "severity" : "warning",
+            "date": "2 min ago",
+            "message": "First warning message could go here. If it is a long message it can wrap."
+          },
+          {
+            "severity" : "warning",
+            "date": "5 min ago",
+            "message": "Second warning message could go here."
+          },
+          {
+            "severity" : "task",
+            "date": "2 min ago",
+            "message": "First task message could go here. If it is a long message it can wrap."
+          },
+          {
+            "severity" : "task",
+            "date": "5 min ago",
+            "message": "Second task message could go here. If it is a long message it can wrap."
+          },
+          {
+            "severity" : "task",
+            "date": "5 min ago",
+            "message": "Third task message could go here. If it is a long message it can wrap."
+          }
+        ],
         "cpuUsageData":{
          "used": 11,
          "total":12,
@@ -79,7 +111,7 @@
 
          ]
       },
-      "storageUsageData":{
+      "iopsTrendData":{
          "used":1.1,
          "total":1.6,
          "data":[
@@ -118,7 +150,7 @@
 
          ]
       },
-      "networkUsageData":{
+      "ioBandWidthData":{
          "used":1100,
          "total":1300,
          "data":[
@@ -157,7 +189,7 @@
 
          ]
       },
-      "currentNetworkUsageData":{
+      "ioLatencyData":{
          "data":[
             800,
             1025,
@@ -179,7 +211,44 @@
 
          ]
       },
-      "dailyNetworkUsageData":{
+      "bandwidthInData":{
+         "data":[
+            1100,
+            1050,
+            999,
+            800,
+            1025,
+            1050,
+            1100,
+            1050,
+            900,
+            800,
+            1025,
+            1050,
+            1100,
+            1050,
+            900,
+            800,
+            1025,
+            1050,
+            1100,
+            1050,
+            900,
+            800,
+            1025,
+            1050,
+            1100,
+            1050,
+            900,
+            800,
+            1025,
+            1100
+         ],
+         "dates":[
+
+         ]
+      },
+      "bandwidthOutData":{
          "data":[
             1100,
             1050,
