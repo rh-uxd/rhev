@@ -11,6 +11,9 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
       if (filter.id === 'name') {
         match = cluster.name.match(filter.value) !== null;
       }
+      else if (filter.id === 'dataCenter') {
+        match = cluster.dataCenter.match(filter.value) !== null;
+      }
       return match;
     };
 
@@ -64,11 +67,67 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
           title:  'Name',
           placeholder: 'Filter by Name',
           filterType: 'text'
+        },
+        {
+          id: 'dataCenter',
+          title:  'Data Center',
+          placeholder: 'Filter by Data Center',
+          filterType: 'text'
         }
       ],
       resultsCount: 0,
       appliedFilters: [],
       onFilterChange: filterChange
+    };
+
+    var compareClustersFn = function(item1, item2) {
+      var compValue = 0;
+      if ($scope.toolbarConfig.sortConfig.currentField.id === 'name') {
+        compValue = item1.name.localeCompare(item2.name);
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'dataCenter') {
+        compValue = item1.dataCenter - item2.dataCenter;
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'hosts') {
+        compValue = item1.hostCount - item2.hostCount;
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'virtualMachines') {
+        compValue = item1.vmCount - item2.vmCount;
+      }
+
+      if (!$scope.toolbarConfig.sortConfig.isAscending) {
+        compValue = compValue * -1;
+      }
+      return compValue;
+    };
+
+    var sortClusters = function (sortId, isAscending) {
+      if ($scope.clusters && $scope.clusters.length > 0) {
+        $scope.clusters.sort(compareClustersFn);
+      }
+    };
+
+    var sortConfig = {
+      fields: [
+        {
+          id: 'name',
+          title:  'Name',
+          sortType: 'alpha'
+        },
+        {
+          id: 'dataCenter',
+          title:  'Data Center',
+          sortType: 'alpha'
+        },
+        {
+          id: 'hosts',
+          title:  'Host Count',
+          sortType: 'numeric'
+        },
+        {
+          id: 'virtualMachines',
+          title:  'Virtual Machine Count',
+          sortType: 'numeric'
+        }
+      ],
+      onSortChange: sortClusters
     };
 
     var createCluster = function (action) {
@@ -133,6 +192,7 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
 
     $scope.toolbarConfig = {
       filterConfig: filterConfig,
+      sortConfig: sortConfig,
       actionsConfig: actionsConfig
     };
 
@@ -145,7 +205,7 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
     $scope.vmStatusThresholdRange = [1, 2, 3];
     $scope.vmStatusColorPattern = ['#bee1f4', '#F9D67A', '#bbbbbb', '#d1d1d1'];
     $scope.vmStatusLegend = ['Running', 'Paused', 'Down', 'Unknown'];
-    $scope.vmsHeatmapChartHeight =  '88px';
+    $scope.vmsHeatmapChartHeight =  '77px';
 
     var compareFn = function (item1, item2) {
       return item2.value - item1.value;
@@ -349,6 +409,7 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
     clustersResource.get(function(response) {
       $scope.allClusters = response.clusters;
       $scope.applyFilters();
+      sortClusters();
       $scope.clustersLoaded = true;
       $scope.lastUpdateTime = new Date();
     });

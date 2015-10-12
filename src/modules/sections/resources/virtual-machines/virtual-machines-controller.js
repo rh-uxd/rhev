@@ -5,11 +5,52 @@ angular.module('rhev.resources.virtual-machines').controller('resources.virtualM
 
     $scope.vmsListId = 'vms-vms-list';
 
+    var usageValues = ['< 70%', '70 - 80%', '80 - 90%', '> 90%'];
+
+    var usageMatch = function (selectValue, usage) {
+      if (selectValue === usageValues[0]) {
+        return usage < 70;
+      }
+      else if (selectValue === usageValues[1]) {
+        return usage >= 70 && usage < 80;
+      }
+      else if (selectValue === usageValues[2]) {
+        return usage >= 80 && usage < 90;
+      }
+      else if (selectValue === usageValues[3]) {
+        return usage >= 90;
+      }
+    };
+
     var matchesFilter = function (vm, filter) {
       var match = true;
 
       if (filter.id === 'name') {
         match = vm.name.match(filter.value) !== null;
+      }
+      else if (filter.id === 'host') {
+        match = vm.host.match(filter.value) !== null;
+      }
+      else if (filter.id === 'ipAddress') {
+        match = vm.ipAddress.match(filter.value) !== null;
+      }
+      else if (filter.id === 'fqdn') {
+        match = vm.fqdn.match(filter.value) !== null;
+      }
+      else if (filter.id === 'cluster') {
+        match = vm.cluster.match(filter.value) !== null;
+      }
+      else if (filter.id === 'dataCenter') {
+        match = vm.dataCenter.match(filter.value) !== null;
+      }
+      else if (filter.id === 'memoryUsage') {
+        return usageMatch(filter.value, vm.memoryInfo.percentUsed);
+      }
+      else if (filter.id === 'cpuUsage') {
+        return usageMatch(filter.value, vm.cpuInfo.percentUsed);
+      }
+      else if (filter.id === 'networkUsage') {
+        return usageMatch(filter.value, vm.networkInfo.percentUsed);
       }
       return match;
     };
@@ -51,11 +92,147 @@ angular.module('rhev.resources.virtual-machines').controller('resources.virtualM
           title:  'Name',
           placeholder: 'Filter by Name',
           filterType: 'text'
+        },
+        {
+          id: 'host',
+          title:  'Host',
+          placeholder: 'Filter by Host',
+          filterType: 'text'
+        },
+        {
+          id: 'ipAddress',
+          title:  'IP Address',
+          placeholder: 'Filter by IP Address',
+          filterType: 'text'
+        },
+        {
+          id: 'fqdn',
+          title:  'FQDN',
+          placeholder: 'Filter by FQDN',
+          filterType: 'text'
+        },
+        {
+          id: 'cluster',
+          title:  'Cluster',
+          placeholder: 'Filter by Cluster',
+          filterType: 'text'
+        },
+        {
+          id: 'dataCenter',
+          title:  'Data Center',
+          placeholder: 'Filter by Data Center',
+          filterType: 'text'
+        },
+        {
+          id: 'memoryUsage',
+          title:  'Memory Usage',
+          placeholder: 'Filter by Memory Usage',
+          filterType: 'select',
+          filterValues: usageValues
+        },
+        {
+          id: 'cpuUsage',
+          title:  'CPU Usage',
+          placeholder: 'Filter by CPU Usage',
+          filterType: 'select',
+          filterValues: usageValues
+        },
+        {
+          id: 'networkUsage',
+          title:  'Network Usage',
+          placeholder: 'Filter by Network Usage',
+          filterType: 'select',
+          filterValues: usageValues
         }
       ],
       resultsCount: 0,
       appliedFilters: [],
       onFilterChange: filterChange
+    };
+
+    var compareClustersFn = function(item1, item2) {
+      var compValue = 0;
+      if ($scope.toolbarConfig.sortConfig.currentField.id === 'name') {
+        compValue = item1.name.localeCompare(item2.name);
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'host') {
+        compValue = item1.host.localeCompare(item2.host);
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'ipAddress') {
+        compValue = item1.ipAddress.localeCompare(item2.ipAddress);
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'fqdn') {
+        compValue = item1.fqdn.localeCompare(item2.fqdn);
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'cluster') {
+        compValue = item1.cluster.localeCompare(item2.cluster);
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'dataCenter') {
+        compValue = item1.dataCenter.localeCompare(item2.dataCenter);
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'memoryUsage') {
+        compValue = item1.memoryInfo.percentUsed - item2.memoryInfo.percentUsed;
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'cpuUsage') {
+        compValue = item1.cpuInfo.percentUsed - item2.cpuInfo.percentUsed;
+      } else if ($scope.toolbarConfig.sortConfig.currentField.id === 'networkUsage') {
+        compValue = item1.networkInfo.percentUsed - item2.networkInfo.percentUsed;
+      }
+
+      if (!$scope.toolbarConfig.sortConfig.isAscending) {
+        compValue = compValue * -1;
+      }
+      return compValue;
+    };
+
+    var sortVms = function (sortId, isAscending) {
+      if ($scope.vms && $scope.vms.length > 0) {
+        $scope.vms.sort(compareClustersFn);
+      }
+    };
+
+    var sortConfig = {
+      fields: [
+        {
+          id: 'name',
+          title:  'Name',
+          sortType: 'alpha'
+        },
+        {
+          id: 'host',
+          title:  'Host',
+          sortType: 'alpha'
+        },
+        {
+          id: 'ipAddress',
+          title:  'IP Address',
+          sortType: 'numeric'
+        },
+        {
+          id: 'fqdn',
+          title:  'FQDN',
+          sortType: 'numeric'
+        },
+        {
+          id: 'cluster',
+          title:  'Cluster',
+          sortType: 'alpha'
+        },
+        {
+          id: 'dataCenter',
+          title:  'Data Center',
+          sortType: 'alpha'
+        },
+        {
+          id: 'memoryUsage',
+          title:  'Memory Usage',
+          sortType: 'numeric'
+        },
+        {
+          id: 'cpuUsage',
+          title:  'CPU Usage',
+          sortType: 'numeric'
+        },
+        {
+          id: 'networkUsage',
+          title:  'Network Usage',
+          sortType: 'numeric'
+        }
+      ],
+      onSortChange: sortVms
     };
 
     var createVm = function (action) {
@@ -120,6 +297,7 @@ angular.module('rhev.resources.virtual-machines').controller('resources.virtualM
 
     $scope.toolbarConfig = {
       filterConfig: filterConfig,
+      sortConfig: sortConfig,
       actionsConfig: actionsConfig
     };
 

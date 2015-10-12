@@ -9,6 +9,7 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
       title: "Data Centers",
       iconClass: "fa fa-globe",
       count: 2,
+      href: '#/resources/data-centers',
       notifications:[
         {
           iconClass: "pficon pficon-error-circle-o",
@@ -34,6 +35,7 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
       title:"Hosts",
       iconClass:"fa fa-desktop",
       count:75,
+      href: '#/resources/hosts',
       notifications:[
         {
           iconClass:"pficon pficon-error-circle-o",
@@ -51,6 +53,7 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
       "type":"projects",
       iconClass:"fa fa-database",
       count:510,
+      href: '#/resources/storage-domains',
       notifications:[
         {
           iconClass:"pficon pficon-error-circle-o",
@@ -74,8 +77,9 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
 
     $scope.networks = {
       title:"Networks",
-      iconClass:"pficon-service",
+      iconClass:"pficon pficon-service",
       count:2500,
+      href: '#/resources/networks',
       notifications:[
         {
           iconClass:"pficon pficon-error-circle-o",

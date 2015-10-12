@@ -32,7 +32,7 @@
                       <span class="rhev-label">{{item.compatibilityVersion}}</span>
                     </td>
                     <td class="rhev-field-column cpu-type-column">
-                      <span class="rhev-label rhev-title">Cluster CPU Type: </span>
+                      <span class="rhev-label rhev-title">CPU Type: </span>
                       <span class="rhev-label">{{item.cpuType}}</span>
                     </td>
                     <td class="rhev-column rhev-object-column host-column">
@@ -68,13 +68,12 @@
               <span class="rhev-table-title pull-left">{{selectedCluster.name}}</span>
             </div>
             <ul class="nav nav-tabs nav-tabs-pf">
-              <li ng-class="{active: currentSection == 'dashboard' || !currentSection}" ng-click="setCurrentSection('dashboard')">  <a>Dashboard</a></li>
-              <li ng-class="{active: currentSection == 'summary'}"                      ng-click="setCurrentSection('summary')">    <a>Summary</a></li>
-              <li ng-class="{active: currentSection == 'networks'}"                     ng-click="setCurrentSection('networks')">   <a>Logical Networks</a></li>
-              <li ng-class="{active: currentSection == 'hosts'}"                        ng-click="setCurrentSection('hosts')">      <a>Hosts</a></li>
-              <li ng-class="{active: currentSection == 'vms'}"                          ng-click="setCurrentSection('vms')">        <a>Virtual Machines</a></li>
-              <li ng-class="{active: currentSection == 'groups'}"                       ng-click="setCurrentSection('groups')">     <a>Affinity Groups</a></li>
-              <li ng-class="{active: currentSection == 'permissions'}"                  ng-click="setCurrentSection('permissions')"><a>Permissions</a></li>
+              <li ng-class="{active: currentSection == 'overview' || !currentSection}" ng-click="setCurrentSection('overview')">    <a>Overview</a></li>
+              <li ng-class="{active: currentSection == 'networks'}"                    ng-click="setCurrentSection('networks')">   <a>Logical Networks</a></li>
+              <li ng-class="{active: currentSection == 'hosts'}"                       ng-click="setCurrentSection('hosts')">      <a>Hosts</a></li>
+              <li ng-class="{active: currentSection == 'vms'}"                         ng-click="setCurrentSection('vms')">        <a>Virtual Machines</a></li>
+              <li ng-class="{active: currentSection == 'groups'}"                      ng-click="setCurrentSection('groups')">     <a>Affinity Groups</a></li>
+              <li ng-class="{active: currentSection == 'permissions'}"                 ng-click="setCurrentSection('permissions')"><a>Permissions</a></li>
             </ul>
             <div class="container-fluid container-tiles-pf details-content rhev-body" ng-switch on="currentSection">
               <div class="row row-tile-pf" ng-switch-default>
@@ -162,17 +161,20 @@
                   </div>
                 </div>
               </div>
-              <div class="row row-tile-pf" ng-switch-when="summary">
-              </div>
               <div class="row row-tile-pf" ng-switch-when="networks">
+                <div rhev-nyi title="Logical Networks"></div>
               </div>
               <div class="row row-tile-pf" ng-switch-when="hosts">
+                <div rhev-nyi title="Hosts"></div>
               </div>
               <div class="row row-tile-pf" ng-switch-when="vms">
+                <div rhev-nyi title="Virtual Machines"></div>
               </div>
               <div class="row row-tile-pf" ng-switch-when="groups">
+                <div rhev-nyi title="Affinity Groups"></div>
               </div>
               <div class="row row-tile-pf" ng-switch-when="permissions">
+                <div rhev-nyi title="Permissions"></div>
               </div>
             </div>
           </div>

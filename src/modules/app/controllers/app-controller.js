@@ -36,12 +36,12 @@ angular.module( 'rhev.appModule').controller( 'rhev.appController', ['$scope', '
             "href":"#/resources/storage-domains"
           },
           {
-            "title":"Networks",
-            "href":"#/resources/networks"
-          },
-          {
             "title":"Virtual Machines",
             "href":"#/resources/virtual-machines"
+          },
+          {
+            "title":"Networks",
+            "href":"#/resources/networks"
           },
           {
             "title":"Capacity Planning",
