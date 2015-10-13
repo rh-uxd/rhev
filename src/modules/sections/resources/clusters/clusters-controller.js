@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('rhev.resources.clusters').controller('resources.clustersController', ['$scope', 'ChartsDataMixin', '$translate', '$resource', '$timeout',
-  function( $scope, chartsDataMixin, $translate, $resource, $timeout ) {
+angular.module('rhev.resources.clusters').controller('resources.clustersController', ['$scope', 'ChartsDataMixin', '$translate', '$resource', '$timeout', 'pfViewUtils',
+  function( $scope, chartsDataMixin, $translate, $resource, $timeout, pfViewUtils ) {
 
     $scope.clustersListId = 'resources-clusters-list';
 
@@ -413,6 +413,13 @@ angular.module('rhev.resources.clusters').controller('resources.clustersControll
       $scope.clustersLoaded = true;
       $scope.lastUpdateTime = new Date();
     });
+
+    $scope.viewSelected = function(viewId) {
+      $scope.currentView = viewId
+    };
+
+    $scope.viewsList = [pfViewUtils.getDashboardView(), pfViewUtils.getTableView()];
+    $scope.currentView = $scope.viewsList[0].id;
 
     $scope.setCurrentSection = function(section) {
       $scope.currentSection = section;
