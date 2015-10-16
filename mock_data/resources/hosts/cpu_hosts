@@ -1,0 +1,85 @@
+{
+   "hosts": [
+       {
+          "uuid": "100000",
+          "name": "host 0",
+          "utilBarChart" : {
+            "data":  {"used": "86","total": "100"},
+            "units": "TB"
+          }
+       },
+       {
+          "uuid": "100001",
+          "name": "host 1",
+          "utilBarChart" : {
+            "data":  {"used": "92","total": "100"},
+            "units": "TB"
+          }
+       },
+       {
+          "uuid": "100002",
+          "name": "host 2",
+          "utilBarChart" : {
+            "data":  {"used": "61","total": "100"},
+            "units": "TB"
+          }
+       },
+       {
+          "uuid": "100003",
+          "name": "host 3",
+          "utilBarChart" : {
+            "data":  {"used": "78","total": "100"},
+            "units": "TB"
+          }
+       },
+       {
+          "uuid": "100004",
+          "name": "host 4",
+          "utilBarChart" : {
+            "data":  {"used": "80","total": "100"},
+            "units": "TB"
+          }
+       },
+
+       {
+          "uuid": "100070",
+          "name": "host 70",
+          "utilBarChart" : {
+            "data":  {"used": "90","total": "100"},
+            "units": "TB"
+          }
+       },
+       {
+          "uuid": "100071",
+          "name": "host 71",
+          "utilBarChart" : {
+            "data":  {"used": "72","total": "100"},
+            "units": "TB"
+          }
+       },
+       {
+          "uuid": "100072",
+          "name": "host 72",
+          "utilBarChart" : {
+            "data":  {"used": "90","total": "100"},
+            "units": "TB"
+          }
+       },
+       {
+          "uuid": "100073",
+          "name": "host 73",
+          "utilBarChart" : {
+            "data":  {"used": "63","total": "100"},
+            "units": "TB"
+          }
+       },
+       {
+          "uuid": "100074",
+          "name": "host 74",
+          "utilBarChart" : {
+            "data":  {"used": "75","total": "100"},
+            "units": "TB"
+          }
+       }
+   ]
+}

@@ -1,0 +1,44 @@
+{
+   "hosts": [
+       {
+          "uuid": "100005",
+          "name": "host 5",
+          "utilBarChart" : {
+            "data":  {"used": "61","total": "100"},
+            "units": "GB"
+          }
+       },
+       {
+          "uuid": "100006",
+          "name": "host 6",
+          "utilBarChart" : {
+            "data":  {"used": "91","total": "100"},
+            "units": "GB"
+          }
+       },
+       {
+          "uuid": "100007",
+          "name": "host 7",
+          "utilBarChart" : {
+            "data":  {"used": "70","total": "100"},
+            "units": "GB"
+          }
+       },
+       {
+          "uuid": "100008",
+          "name": "host 8",
+          "utilBarChart" : {
+            "data":  {"used": "98","total": "100"},
+            "units": "GB"
+          }
+       },
+       {
+          "uuid": "100009",
+          "name": "host 9",
+          "utilBarChart" : {
+            "data":  {"used": "91","total": "100"},
+            "units": "GB"
+          }
+       }
+   ]
+}

@@ -75,4 +75,79 @@
       </div>
     </div>
   </div>
+
+  <!-- Utilization Drilldown Modal Dialog -->
+
+  <div class="modal fade overutilization-dialog" id="utilDrilldown" role="dialog">
+    <div class="modal-dialog">
+
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Overutilized Resources ({{utilizationDrillDown.title}})</h4>
+        </div>
+        <div class="modal-body">
+          <!---- Hosts -->
+          <div ng-if="overUtilizedHostsLoaded">
+            <div class="row row-tile-pf">
+              <div class="col-md-12">
+                <div>Hosts ({{overUtilizedHosts.length}})</div>
+              </div>
+            </div>
+            <div ng-if="overUtilizedHosts.length === 0" class="no-overutilized">
+              There are currently no overutilized hosts
+            </div>
+            <div ng-if="overUtilizedHosts.length > 0" class="overutilized-container">
+              <div class="overutilized-section">
+                <span  ng-repeat="host in overUtilizedHosts">
+                  <div class="row">
+                    <div class="col-md-2 text-right">
+                      <a data-dismiss="modal" ng-click="loadHostDetails(host.uuid)">{{host.name}}</a>
+                    </div>
+                    <div class="col-md-10">
+                      <div pf-utilization-bar-chart chart-data=host.utilBarChart.data units=host.utilBarChart.units
+                           layout=layoutInline used-label-format='percent' threshold-error="85" threshold-warning="60"></div>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+          </br>
+          <!---- Virtual Machines -->
+          <div ng-if="overUtilizedVMsLoaded">
+            <div class="row row-tile-pf">
+              <div class="col-md-12">
+                <div>Virtual Machines ({{overUtilizedVMs.length}})</div>
+              </div>
+            </div>
+            <div ng-if="overUtilizedVMs.length === 0" class="no-overutilized">
+              There are currently no overutilized virtual machines
+            </div>
+            <div ng-if="overUtilizedVMs.length > 0" class="overutilized-container">
+              <div class="overutilized-section">
+                <span ng-repeat="vm in overUtilizedVMs">
+                  <div class="row">
+                    <div class="col-md-2 text-right">
+                        <a data-dismiss="modal" ng-click="loadVMDetails(vm.uuid)">{{vm.name}}</a>
+                    </div>
+                    <div class="col-md-10">
+                      <div pf-utilization-bar-chart chart-data=vm.utilBarChart.data units=vm.utilBarChart.units
+                           layout=layoutInline used-label-format='percent' threshold-error="85" threshold-warning="60"></div>
+                    </div>
+                  </div>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
 </div>

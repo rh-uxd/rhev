@@ -1,5 +1,5 @@
-angular.module('rhev.dashboard').controller('sections.dashboardController', ['$scope', 'ChartsDataMixin', '$translate', '$resource',
-  function( $scope, chartsDataMixin, $translate, $resource ) {
+angular.module('rhev.dashboard').controller('sections.dashboardController', ['$scope', 'ChartsDataMixin', '$translate', '$resource', '$location', '$timeout',
+  function( $scope, chartsDataMixin, $translate, $resource, $location, $timeout ) {
     'use strict';
 
     $scope.sparklineChartHeight = chartsDataMixin.dashboardSparklineChartHeight;
@@ -88,8 +88,6 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
       ]
     };
 
-
-
     // Utilization
     $scope.cpuUsageConfig = chartConfig.cpuUsageConfig;
     $scope.cpuUsageSparklineConfig = {
@@ -97,7 +95,12 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
     };
     $scope.cpuUsageDonutConfig = {
       chartId: 'cpuDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+      thresholds: {'warning':'60','error':'90'},
+      onClickFn: function (d, i) {
+        utilizationDrilldown($scope.cpuUsageConfig.title,
+                             $scope.cpuUsageDonutConfig.chartId,
+                             d, i);
+      }
     };
 
     $scope.memoryUsageConfig = chartConfig.memoryUsageConfig;
@@ -106,7 +109,12 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
     };
     $scope.memoryUsageDonutConfig = {
       chartId: 'memoryDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+      thresholds: {'warning':'60','error':'90'},
+      onClickFn: function (d, i) {
+        utilizationDrilldown($scope.memoryUsageConfig.title,
+                             $scope.memoryUsageDonutConfig.chartId,
+                             d, i);
+      }
     };
 
     $scope.networkUsageConfig = chartConfig.networkUsageConfig;
@@ -115,7 +123,13 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
     };
     $scope.networkUsageDonutConfig = {
       chartId: 'networkDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+      thresholds: {'warning':'60','error':'90'},
+      onClickFn: function (d, i) {
+        utilizationDrilldown($scope.networkUsageConfig.title,
+                             $scope.networkUsageDonutConfig.chartId,
+                             d, i);
+      }
+
     };
 
     $scope.storageUsageConfig = chartConfig.storageUsageConfig;
@@ -124,7 +138,12 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
     };
     $scope.storageUsageDonutConfig = {
       chartId: 'storageDonutChart',
-      thresholds: {'warning':'60','error':'90'}
+      thresholds: {'warning':'60','error':'90'},
+      onClickFn: function (d, i) {
+        utilizationDrilldown($scope.storageUsageConfig.title,
+                             $scope.storageUsageDonutConfig.chartId,
+                             d, i);
+      }
     };
 
     $scope.utilizationLoadingDone = false;
@@ -192,5 +211,58 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
     });
 
     $scope.nodeHeatMapUsageLegendLabels = chartsDataMixin.nodeHeatMapUsageLegendLabels;
+
+    // Utilization Drilldown Dialog
+
+    var utilizationDrilldown = function (title, chartId, d, i) {
+      $scope.utilizationDrillDown = {title: title, chartId: chartId};
+      $scope.layoutInline = {
+        'type': 'inline'
+      };
+      loadOverUtilizedVMs();
+      loadOverUtilizedHosts();
+      $scope.$apply();
+      $("#utilDrilldown").modal();
+
+      // When dialog closed, reset loaded flags
+      $("#utilDrilldown").on('hidden.bs.modal', function () {
+        $scope.overUtilizedVMsLoaded = false;
+        $scope.overUtilizedHostsLoaded = false;
+      });
+    };
+
+    $scope.OverUtilizedVMsLoaded = false;
+    var loadOverUtilizedVMs = function () {
+      var targetResource = String($scope.utilizationDrillDown.title).toLowerCase() + "_vms";
+      console.log("targetResource = " + targetResource);
+      var vmsResource = $resource('/resources/virtual-machines/' + targetResource);
+      vmsResource.get(function (response) {
+        $scope.overUtilizedVMs = response["virtual-machines"];
+        $scope.overUtilizedVMsLoaded = true;
+      });
+    };
+
+    $scope.overUtilizedHostsLoaded = false;
+    var loadOverUtilizedHosts = function () {
+      var targetResource = String($scope.utilizationDrillDown.title).toLowerCase() + "_hosts";
+      console.log("targetResource = " + targetResource);
+      var hostsResource = $resource('/resources/hosts/' + targetResource);
+      hostsResource.get(function (response) {
+        $scope.overUtilizedHosts = response["hosts"];
+        $scope.overUtilizedHostsLoaded = true;
+      });
+    };
+
+    $scope.loadVMDetails = function(vmId) {
+      $timeout(function() {
+        $location.path('/resources/virtual-machines/' + vmId );
+      }, 400);
+    };
+
+    $scope.loadHostDetails = function(hostId) {
+      $timeout(function() {
+        $location.path('/resources/hosts/');
+      }, 400);
+    };
   }
 ]);

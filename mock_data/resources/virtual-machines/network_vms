@@ -1,0 +1,112 @@
+{
+   "virtual-machines": [
+       {
+          "uuid": "100011",
+          "name": "vm 11",
+          "host": "host 1",
+          "ipAddress": "10.18.57.14",
+          "fqdn": "hostname.domain6",
+          "cluster": "cluster 1",
+          "dataCenter": "data center 1",
+          "memoryUsed": 16,
+          "memoryTotal": 16,
+          "cpuUsedPercent": 79,
+          "networkUsed": 123,
+          "networkTotal": 1100,
+          "utilBarChart" : {
+            "data":  {"used": "71","total": "100"},
+            "units": "GB"
+          }
+       },
+       {
+          "uuid": "100012",
+          "name": "vm 12",
+          "host": "host 1",
+          "ipAddress": "10.18.57.15",
+          "fqdn": "hostname.domain7",
+          "cluster": "cluster 1",
+          "dataCenter": "data center 1",
+          "memoryUsed": 15,
+          "memoryTotal": 16,
+          "cpuUsedPercent": 98,
+          "networkUsed": 1040,
+          "networkTotal": 1100,
+          "utilBarChart" : {
+            "data":  {"used": "76","total": "100"},
+            "units": "GB"
+          }
+       },
+       {
+          "uuid": "100013",
+          "name": "vm 13",
+          "host": "host 1",
+          "ipAddress": "10.18.57.16",
+          "fqdn": "hostname.domain8",
+          "cluster": "cluster 1",
+          "dataCenter": "data center 1",
+          "memoryUsed": 9,
+          "memoryTotal": 16,
+          "cpuUsedPercent": 87,
+          "networkUsed": 852,
+          "networkTotal": 1100,
+          "utilBarChart" : {
+            "data":  {"used": "81","total": "100"},
+            "units": "GB"
+          }
+       },
+       {
+          "uuid": "100014",
+          "name": "vm 14",
+          "host": "host 1",
+          "ipAddress": "10.18.57.17",
+          "fqdn": "hostname.domain9",
+          "cluster": "cluster 1",
+          "dataCenter": "data center 1",
+          "memoryUsed": 1,
+          "memoryTotal": 16,
+          "cpuUsedPercent": 23,
+          "networkUsed": 700,
+          "networkTotal": 1100,
+          "utilBarChart" : {
+            "data":  {"used": "68","total": "100"},
+            "units": "GB"
+          }
+       },
+       {
+          "uuid": "100015",
+          "name": "vm 15",
+          "host": "host 1",
+          "ipAddress": "10.18.57.18",
+          "fqdn": "hostname.domain10",
+          "cluster": "cluster 1",
+          "dataCenter": "data center 1",
+          "memoryUsed": 8,
+          "memoryTotal": 16,
+          "cpuUsedPercent": 19,
+          "networkUsed": 300,
+          "networkTotal": 1100,
+          "utilBarChart" : {
+            "data":  {"used": "91","total": "100"},
+            "units": "GB"
+          }
+       },
+       {
+          "uuid": "100016",
+          "name": "vm 16",
+          "host": "host 2",
+          "ipAddress": "10.18.75.19",
+          "fqdn": "hostname.domain11",
+          "cluster": "cluster 1",
+          "dataCenter": "data center 1",
+          "memoryUsed": 3,
+          "memoryTotal": 16,
+          "cpuUsedPercent": 76,
+          "networkUsed": 800,
+          "networkTotal": 1100,
+          "utilBarChart" : {
+            "data":  {"used": "61","total": "100"},
+            "units": "GB"
+          }
+       }
+   ]
+}
