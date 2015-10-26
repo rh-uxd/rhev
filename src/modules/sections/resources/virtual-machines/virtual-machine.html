@@ -4,6 +4,18 @@
     <li class="active"><a href="#/resources">Resources</a></li>
     <li class="active"><a href="#/resources/virtual-machines">Virtual Machines</a></li>
     <li>{{vm.name}}</li>
+
+    <ul class="nav nav-tabs nav-tabs-pf">
+      <li ng-class="{active: currentSection == 'overview' || !currentSection}" ng-click="setCurrentSection('overview')">     <a>Overview</a></li>
+      <li ng-class="{active: currentSection == 'network'}"                     ng-click="setCurrentSection('network')">     <a>Network Interface</a></li>
+      <li ng-class="{active: currentSection == 'disks'}"                       ng-click="setCurrentSection('disks')">       <a>Disks</a></li>
+      <li ng-class="{active: currentSection == 'snapshots'}"                   ng-click="setCurrentSection('snapshots')">   <a>Snapshots</a></li>
+      <li ng-class="{active: currentSection == 'application'}"                 ng-click="setCurrentSection('application')"> <a>Application</a></li>
+      <li ng-class="{active: currentSection == 'groups'}"                      ng-click="setCurrentSection('groups')">      <a>Affinity Groups</a></li>
+      <li ng-class="{active: currentSection == 'permissions'}"                 ng-click="setCurrentSection('permissions')"> <a>Permissions</a></li>
+      <li ng-class="{active: currentSection == 'sessions'}"                    ng-click="setCurrentSection('sessions')">    <a>Sessions</a></li>
+    </ul>
+
     <div class="toolbar-pf-view-selector pull-right">
       <ul class="list-inline">
         <li ng-repeat="view in viewsList"
@@ -15,9 +27,10 @@
         </li>
       </ul>
     </div>
+
   </ol>
 
-  <div ng-if="currentView === 'dashboardView'">
+  <div ng-if="currentView === 'dashboardView' && currentSection == 'overview'">
     <div class="row row-tile-pf" >
       <div class="col-xs-7 col-sm-7 col-md-7">
         <div pf-card head-title="Virtual Machine Utilization" hidetopborder="true">
@@ -111,20 +124,10 @@
       </div>
     </div>
   </div>
-  <div ng-if="currentView === 'tableView'">
-    <ul class="nav nav-tabs nav-tabs-pf">
-      <li ng-class="{active: currentSection == 'general' || !currentSection}"  ng-click="setCurrentSection('general')">     <a>General</a></li>
-      <li ng-class="{active: currentSection == 'network'}"                     ng-click="setCurrentSection('network')">     <a>Network Interface</a></li>
-      <li ng-class="{active: currentSection == 'disks'}"                       ng-click="setCurrentSection('disks')">       <a>Disks</a></li>
-      <li ng-class="{active: currentSection == 'snapshots'}"                   ng-click="setCurrentSection('snapshots')">   <a>Snapshots</a></li>
-      <li ng-class="{active: currentSection == 'application'}"                 ng-click="setCurrentSection('application')"> <a>Application</a></li>
-      <li ng-class="{active: currentSection == 'groups'}"                      ng-click="setCurrentSection('groups')">      <a>Affinity Groups</a></li>
-      <li ng-class="{active: currentSection == 'permissions'}"                 ng-click="setCurrentSection('permissions')"> <a>Permissions</a></li>
-      <li ng-class="{active: currentSection == 'sessions'}"                    ng-click="setCurrentSection('sessions')">    <a>Sessions</a></li>
-    </ul>
+  <div ng-if="!(currentView === 'dashboardView' && currentSection == 'overview')">
     <div class="container-fluid container-tiles-pf details-content rhev-body" ng-switch on="currentSection" style="min-height: 375px;">
       <div class="row row-tile-pf" ng-switch-default>
-        <div rhev-nyi title="General"></div>
+        <div rhev-nyi title="Overview"></div>
       </div>
       <div class="row row-tile-pf" ng-switch-when="network">
         <div rhev-nyi title="Network Interface"></div>

@@ -13,6 +13,7 @@ angular.module('rhev.resources.virtual-machines')
 
     $scope.viewsList = [pfViewUtils.getDashboardView(), pfViewUtils.getTableView()];
     $scope.currentView = $scope.viewsList[0].id;
+    $scope.currentSection = 'overview';
 
     $scope.setCurrentSection = function(section) {
       $scope.currentSection = section;

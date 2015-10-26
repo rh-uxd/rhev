@@ -64,8 +64,19 @@
             <p>Select a cluster from the list above to see more details. You can view details for the selected cluster's Logical Networks, Hosts, Virtual Machines, Affinity Groups, and Permissions.</p>
           </div>
           <div ng-if="selectedCluster">
+
+            <span class="rhev-table-title pull-left">{{selectedCluster.name}}</span>
+
             <div class="rhev-table-header row">
-              <span class="rhev-table-title pull-left">{{selectedCluster.name}}</span>
+              <ul class="nav nav-tabs nav-tabs-pf">
+                <li ng-class="{active: currentSection == 'overview' || !currentSection}" ng-click="setCurrentSection('overview')">   <a>Overview</a></li>
+                <li ng-class="{active: currentSection == 'networks'}"                    ng-click="setCurrentSection('networks')">   <a>Logical Networks</a></li>
+                <li ng-class="{active: currentSection == 'hosts'}"                       ng-click="setCurrentSection('hosts')">      <a>Hosts</a></li>
+                <li ng-class="{active: currentSection == 'vms'}"                         ng-click="setCurrentSection('vms')">        <a>Virtual Machines</a></li>
+                <li ng-class="{active: currentSection == 'groups'}"                      ng-click="setCurrentSection('groups')">     <a>Affinity Groups</a></li>
+                <li ng-class="{active: currentSection == 'permissions'}"                 ng-click="setCurrentSection('permissions')"><a>Permissions</a></li>
+              </ul>
+
               <div class="toolbar-pf-view-selector pull-right">
                 <ul class="list-inline">
                   <li ng-repeat="view in viewsList"
@@ -78,7 +89,8 @@
                 </ul>
               </div>
             </div>
-            <div ng-if="currentView === 'dashboardView'">
+
+            <div ng-if="currentView === 'dashboardView' && currentSection === 'overview'">
               <div class="container-fluid container-tiles-pf details-content rhev-body">
                 <div class="row row-tile-pf">
                   <div class="col-xs-12 col-md-3">
@@ -167,18 +179,10 @@
                 </div>
               </div>
             </div>
-            <div ng-if="currentView === 'tableView'">
-              <ul class="nav nav-tabs nav-tabs-pf">
-                <li ng-class="{active: currentSection == 'overview' || !currentSection}" ng-click="setCurrentSection('overview')">   <a>General</a></li>
-                <li ng-class="{active: currentSection == 'networks'}"                    ng-click="setCurrentSection('networks')">   <a>Logical Networks</a></li>
-                <li ng-class="{active: currentSection == 'hosts'}"                       ng-click="setCurrentSection('hosts')">      <a>Hosts</a></li>
-                <li ng-class="{active: currentSection == 'vms'}"                         ng-click="setCurrentSection('vms')">        <a>Virtual Machines</a></li>
-                <li ng-class="{active: currentSection == 'groups'}"                      ng-click="setCurrentSection('groups')">     <a>Affinity Groups</a></li>
-                <li ng-class="{active: currentSection == 'permissions'}"                 ng-click="setCurrentSection('permissions')"><a>Permissions</a></li>
-              </ul>
+            <div ng-if="!(currentView === 'dashboardView' && currentSection === 'overview')">
               <div class="container-fluid container-tiles-pf details-content rhev-body" ng-switch on="currentSection">
                 <div class="row row-tile-pf" ng-switch-default>
-                  <div rhev-nyi title="General"></div>
+                  <div rhev-nyi title="Overview"></div>
                 </div>
                 <div class="row row-tile-pf" ng-switch-when="networks">
                   <div rhev-nyi title="Logical Networks"></div>
