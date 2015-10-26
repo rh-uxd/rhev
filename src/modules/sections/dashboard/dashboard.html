@@ -100,7 +100,7 @@
             </div>
             <div ng-if="overUtilizedHosts.length > 0" class="overutilized-container">
               <div class="overutilized-section">
-                <span  ng-repeat="host in overUtilizedHosts">
+                <span  ng-repeat="host in overUtilizedHosts | orderBy:'-percentageUsed'">
                   <div class="row">
                     <div class="col-md-2 text-right">
                       <a data-dismiss="modal" ng-click="loadHostDetails(host.uuid)">{{host.name}}</a>
@@ -127,7 +127,7 @@
             </div>
             <div ng-if="overUtilizedVMs.length > 0" class="overutilized-container">
               <div class="overutilized-section">
-                <span ng-repeat="vm in overUtilizedVMs">
+                <span ng-repeat="vm in overUtilizedVMs | orderBy:'-percentageUsed'">
                   <div class="row">
                     <div class="col-md-2 text-right">
                         <a data-dismiss="modal" ng-click="loadVMDetails(vm.uuid)">{{vm.name}}</a>

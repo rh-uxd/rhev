@@ -238,6 +238,12 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
       var vmsResource = $resource('/resources/virtual-machines/' + targetResource);
       vmsResource.get(function (response) {
         $scope.overUtilizedVMs = response["virtual-machines"];
+
+        // Calculate percentageUsed for sort
+        $scope.overUtilizedVMs.forEach(function (vm) {
+          vm.percentageUsed = Math.round(100 * (parseInt(vm.utilBarChart.data.used, 10) / parseInt(vm.utilBarChart.data.total, 10)));
+        });
+
         $scope.overUtilizedVMsLoaded = true;
       });
     };
@@ -249,6 +255,12 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
       var hostsResource = $resource('/resources/hosts/' + targetResource);
       hostsResource.get(function (response) {
         $scope.overUtilizedHosts = response["hosts"];
+
+        // Calculate percentageUsed for sort
+        $scope.overUtilizedHosts.forEach(function (host) {
+          host.percentageUsed = Math.round(100 * (parseInt(host.utilBarChart.data.used, 10) / parseInt(host.utilBarChart.data.total, 10)));
+        });
+
         $scope.overUtilizedHostsLoaded = true;
       });
     };
