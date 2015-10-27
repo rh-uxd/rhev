@@ -91,8 +91,8 @@
           }
        },
        {
-          "uuid": "100060",
-          "name": "vm 60",
+          "uuid": "100005",
+          "name": "vm 5",
           "host": "host 1",
           "ipAddress": "10.18.57.9",
           "fqdn": "hostname.domain1",
@@ -109,8 +109,8 @@
           }
       },
       {
-          "uuid": "100061",
-          "name": "vm 61",
+          "uuid": "100006",
+          "name": "vm 6",
           "host": "host 1",
           "ipAddress": "10.18.57.10",
           "fqdn": "hostname.domain2",
@@ -127,9 +127,9 @@
           }
       },
       {
-          "uuid": "100062",
-          "name": "vm 62",
-          "host": "host 1",
+          "uuid": "100007",
+          "name": "vm 7",
+          "host": "host 7",
           "ipAddress": "10.18.57.11",
           "fqdn": "hostname.domain3",
           "cluster": "cluster 1",
@@ -145,8 +145,8 @@
           }
       },
       {
-          "uuid": "100063",
-          "name": "vm 63",
+          "uuid": "100008",
+          "name": "vm 8",
           "host": "host 1",
           "ipAddress": "10.18.57.12",
           "fqdn": "hostname.domain4",
@@ -163,8 +163,8 @@
           }
       },
       {
-          "uuid": "100064",
-          "name": "vm 64",
+          "uuid": "100009",
+          "name": "vm 9",
           "host": "host 1",
           "ipAddress": "10.18.57.13",
           "fqdn": "hostname.domain5",
