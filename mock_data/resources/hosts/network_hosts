@@ -5,7 +5,8 @@
           "name": "host 10",
           "utilBarChart" : {
             "data":  {"used": "61","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -13,7 +14,8 @@
           "name": "host 11",
           "utilBarChart" : {
             "data":  {"used": "91","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -21,7 +23,8 @@
           "name": "host 12",
           "utilBarChart" : {
             "data":  {"used": "98","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-down"
           }
        },
        {
@@ -29,7 +32,8 @@
           "name": "host 13",
           "utilBarChart" : {
             "data":  {"used": "66","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-down"
           }
        },
        {
@@ -37,7 +41,8 @@
           "name": "host 14",
           "utilBarChart" : {
             "data":  {"used": "81","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-up"
           }
        }
    ]

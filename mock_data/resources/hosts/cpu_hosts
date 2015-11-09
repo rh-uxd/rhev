@@ -5,7 +5,8 @@
           "name": "host 0",
           "utilBarChart" : {
             "data":  {"used": "86","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -13,7 +14,8 @@
           "name": "host 1",
           "utilBarChart" : {
             "data":  {"used": "92","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -21,7 +23,8 @@
           "name": "host 2",
           "utilBarChart" : {
             "data":  {"used": "61","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-down"
           }
        },
        {
@@ -29,7 +32,8 @@
           "name": "host 3",
           "utilBarChart" : {
             "data":  {"used": "78","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-down"
           }
        },
        {
@@ -37,7 +41,8 @@
           "name": "host 4",
           "utilBarChart" : {
             "data":  {"used": "80","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-up"
           }
        },
 
@@ -46,7 +51,8 @@
           "name": "host 70",
           "utilBarChart" : {
             "data":  {"used": "90","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -54,7 +60,8 @@
           "name": "host 71",
           "utilBarChart" : {
             "data":  {"used": "72","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-down"
           }
        },
        {
@@ -62,7 +69,8 @@
           "name": "host 72",
           "utilBarChart" : {
             "data":  {"used": "90","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -70,7 +78,8 @@
           "name": "host 73",
           "utilBarChart" : {
             "data":  {"used": "63","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -78,7 +87,8 @@
           "name": "host 74",
           "utilBarChart" : {
             "data":  {"used": "75","total": "100"},
-            "units": "TB"
+            "units": "TB",
+            "trendIcon": "pficon-trend-down"
           }
        }
    ]

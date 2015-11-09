@@ -15,7 +15,8 @@
           "networkTotal": 1100,
           "utilBarChart" : {
             "data":  {"used": "61","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -33,7 +34,8 @@
           "networkTotal": 1100,
           "utilBarChart" : {
             "data":  {"used": "81","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -51,7 +53,8 @@
           "networkTotal": 1100,
           "utilBarChart" : {
             "data":  {"used": "77","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-down"
           }
        },
        {
@@ -69,7 +72,8 @@
           "networkTotal": 1100,
           "utilBarChart" : {
             "data":  {"used": "88","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-down"
           }
        },
        {
@@ -87,7 +91,8 @@
           "networkTotal": 1100,
           "utilBarChart" : {
             "data":  {"used": "65","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-up"
           }
        },
        {
@@ -105,7 +110,8 @@
           "networkTotal": 1100,
           "utilBarChart" : {
             "data":  {"used": "98","total": "100"},
-            "units": "GB"
+            "units": "GB",
+            "trendIcon": "pficon-trend-up"
           }
        }
    ]
