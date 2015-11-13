@@ -234,7 +234,6 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
     $scope.OverUtilizedVMsLoaded = false;
     var loadOverUtilizedVMs = function () {
       var targetResource = String($scope.utilizationDrillDown.title).toLowerCase() + "_vms";
-      console.log("targetResource = " + targetResource);
       var vmsResource = $resource('/resources/virtual-machines/' + targetResource);
       vmsResource.get(function (response) {
         $scope.overUtilizedVMs = response["virtual-machines"];
@@ -251,7 +250,6 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
     $scope.overUtilizedHostsLoaded = false;
     var loadOverUtilizedHosts = function () {
       var targetResource = String($scope.utilizationDrillDown.title).toLowerCase() + "_hosts";
-      console.log("targetResource = " + targetResource);
       var hostsResource = $resource('/resources/hosts/' + targetResource);
       hostsResource.get(function (response) {
         $scope.overUtilizedHosts = response["hosts"];
@@ -276,5 +274,39 @@ angular.module('rhev.dashboard').controller('sections.dashboardController', ['$s
         $location.path('/resources/hosts/');
       }, 400);
     };
+
+    $timeout(function() {
+      var usedContextMenu = [
+        {
+          title: 'View Resources',
+          action: function (elm, d, i) {
+            utilizationDrilldown($scope.cpuUsageConfig.title, $scope.cpuUsageDonutConfig.chartId);
+          }
+        },
+        {
+          title: 'View VMs',
+          action: function (elm, d, i) {
+            $location.path('/resources/virtual-machines/');
+            $scope.$apply();
+          }
+        }
+      ];
+
+      var availContextMenu = [
+        {
+          title: 'View VMs',
+          action: function (elm, d, i) {
+            $location.path('/resources/virtual-machines/');
+            $scope.$apply();
+          }
+        }
+      ];
+
+      // hook up appropriate context menus for Used and Available arcs
+      var g = d3.select('.c3-arcs-Used');
+      g.on('contextmenu', d3.contextMenu(usedContextMenu));
+      g = d3.select('.c3-arcs-Available');
+      g.on('contextmenu', d3.contextMenu(availContextMenu));
+    }, 1100);
   }
 ]);
